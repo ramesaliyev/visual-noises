@@ -51,7 +51,9 @@ function onResize(initial) {
 function draw() {
   context.clearRect(0, 0, screenWidth, screenHeight);
 
-  drawBilinearInterpolationExample();
+  // drawBilinearInterpolationExample();
+  drawLinearInterpolationExample();
+
   console.log('redrawed');
 }
 

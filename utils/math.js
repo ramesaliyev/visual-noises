@@ -38,7 +38,7 @@ function lerp(a, b, t) {
   );
 }
 
-function bilerp(tx, ty, c00, c10, c01, c11) {
+function bilerp(c00, c10, c01, c11, tx, ty) {
   return lerp(
     lerp(c01, c11, tx),
     lerp(c00, c10, tx),

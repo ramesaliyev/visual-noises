@@ -22,6 +22,21 @@ function circle(x, y, r, options) {
   fill ? context.fill() : context.stroke();
 };
 
+function line(fromX, fromY, toX, toY, options) {
+  const {
+    color = '#fff',
+    lineWidth = 1,
+  } = (options || {});
+
+  context.setLineDash([]);
+  context.lineWidth = lineWidth;
+  context.strokeStyle = color;
+  context.beginPath();
+  context.moveTo(fromX, fromY);
+  context.lineTo(toX, toY);
+  context.stroke();
+}
+
 function dashedLine(xFrom, yFrom, xTo, yTo, options) {
   const {
     dashLen = 10,
@@ -39,3 +54,20 @@ function dashedLine(xFrom, yFrom, xTo, yTo, options) {
   context.lineTo(xTo, yTo);
   context.stroke();
 }
+
+
+function rect(x, y, w, h, options) {
+  const {
+    color = '#fff',
+    fill = true,
+    lineWidth = 1,
+  } = (options || {});
+
+  context.beginPath();
+  context.lineWidth = lineWidth,
+  context.strokeStyle = color;
+  context.fillStyle = color;
+  context.rect(x, y, w, h);
+  context.closePath();
+  fill ? context.fill() : context.stroke();
+};

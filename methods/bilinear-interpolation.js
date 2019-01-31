@@ -60,7 +60,7 @@ function drawBilinearInterpolationExample(gridCellSize = 75) {
       const c01 = grid[gridX + (gridY * gridVertexCountX)];
       const c11 = grid[gridX + 1 + (gridY * gridVertexCountX)];
 
-      const color = bilerp(tx, ty, c00, c10, c01, c11);
+      const color = bilerp(c00, c10, c01, c11, tx, ty);
 
       const xPos = imageStartPosX + x;
       const yPos = imageStartPosY + y;
