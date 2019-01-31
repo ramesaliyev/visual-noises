@@ -52,7 +52,8 @@ function draw() {
   context.clearRect(0, 0, screenWidth, screenHeight);
 
   // drawBilinearInterpolationExample();
-  drawLinearInterpolationExample();
+  // drawLinearInterpolationExample();
+  drawWhiteNoiseExample();
 
   console.log('redrawed');
 }
