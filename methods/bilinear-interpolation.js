@@ -1,23 +1,3 @@
-function multiplyVector(vector, scalar) {
-  return vector.map(val => val * scalar);
-}
-
-function sumVector(a, b) {
-  return a.map((v, i) => v + b[i]);
-}
-
-function lerpVector(a, b, t) {
-  return sumVector(multiplyVector(a, (1 - t)), multiplyVector(b, t));
-}
-
-function bilerpVector(tx, ty, c00, c10, c01, c11) {
-  return lerpVector(
-    lerpVector(c01, c11, tx),
-    lerpVector(c00, c10, tx),
-    ty
-  );
-}
-
 function drawBilinearInterpolationExample(gridCellSize = 75) {
   context.clearRect(0, 0, screenWidth, screenHeight);
   // Set values;
@@ -80,7 +60,7 @@ function drawBilinearInterpolationExample(gridCellSize = 75) {
       const c01 = grid[gridX + (gridY * gridVertexCountX)];
       const c11 = grid[gridX + 1 + (gridY * gridVertexCountX)];
 
-      const color = bilerpVector(tx, ty, c00, c10, c01, c11);
+      const color = bilerp(tx, ty, c00, c10, c01, c11);
 
       const xPos = imageStartPosX + x;
       const yPos = imageStartPosY + y;
