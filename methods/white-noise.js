@@ -1,4 +1,6 @@
-function drawWhiteNoiseExample() {
+function drawWhiteNoiseExample(seed) {
+  seed && setRandomSeed(seed);
+
   context.clearRect(0, 0, screenWidth, screenHeight);
 
   const imageWidth = (screenWidth - 100);
@@ -12,10 +14,11 @@ function drawWhiteNoiseExample() {
       const xPos = imageStartPosX + x;
       const yPos = imageStartPosY + y;
 
-      const color = [randomRange(0, 255), randomRange(0, 255), randomRange(0, 255)];
+      const color = [srandRange(0, 255), srandRange(0, 255), srandRange(0, 255)];
 
       line(xPos, yPos, xPos, yPos+1, {color: `rgb(${color[0]}, ${color[1]}, ${color[2]})`});
     }
   };
 
+  console.log('White noise completed.');
 }

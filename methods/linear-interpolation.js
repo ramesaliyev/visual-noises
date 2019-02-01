@@ -1,4 +1,6 @@
-function drawLinearInterpolationExample(pointDistance = 50) {
+function drawLinearInterpolationExample(pointDistance = 50, seed) {
+  seed && setRandomSeed(seed);
+
   context.clearRect(0, 0, screenWidth, screenHeight);
 
   // Set values;
@@ -34,7 +36,7 @@ function drawLinearInterpolationExample(pointDistance = 50) {
   }
 
   for (let x = 0; x < totalPoint; x++) {
-    const color = points[x] = [randomRange(0, 255), randomRange(0, 255), randomRange(0, 255)];
+    const color = points[x] = [srandRange(0, 255), srandRange(0, 255), srandRange(0, 255)];
     circle(axisStartPosX + (x * pointDistance), axisStartPosY, 5, {color: `rgb(${color[0]}, ${color[1]}, ${color[2]})`});
   }
 
@@ -65,4 +67,6 @@ function drawLinearInterpolationExample(pointDistance = 50) {
     line(xPos, 500-color[1], xPos, 500-color[1]-1, {color: `rgb(${0}, ${color[1]}, ${0})`});
     line(xPos, 500-color[0], xPos, 500-color[0]-1, {color: `rgb(${color[0]}, ${0}, ${0})`});
   }
+
+  console.log('Linear interpolation completed.');
 }

@@ -1,5 +1,8 @@
-function drawBilinearInterpolationExample(gridCellSize = 75) {
+function drawBilinearInterpolationExample(gridCellSize = 75, seed) {
+  seed && setRandomSeed(seed);
+
   context.clearRect(0, 0, screenWidth, screenHeight);
+
   // Set values;
   const availableWidth = (screenWidth - 100);
   const availableHeight = (screenHeight - 150) / 2;
@@ -32,7 +35,7 @@ function drawBilinearInterpolationExample(gridCellSize = 75) {
 
       dashedLine(xPos, gridStartPosY, xPos, gridStartPosY + gridHeight, {color: '#333'});
 
-      const color = [randomRange(0, 255), randomRange(0, 255), randomRange(0, 255)];
+      const color = [srandRange(0, 255), srandRange(0, 255), srandRange(0, 255)];
 
       grid[y*gridVertexCountX + x] = color;
     }
@@ -68,4 +71,6 @@ function drawBilinearInterpolationExample(gridCellSize = 75) {
       circle(xPos, yPos, 1, {color: `rgb(${color[0]}, ${color[1]}, ${color[2]})`});
     }
   };
+
+  console.log('Bilinear interpolation completed.');
 }

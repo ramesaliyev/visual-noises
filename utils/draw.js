@@ -1,3 +1,6 @@
+/**
+ * Draw circle
+ */
 function circle(x, y, r, options) {
   const {
     color = '#fff',
@@ -22,6 +25,9 @@ function circle(x, y, r, options) {
   fill ? context.fill() : context.stroke();
 };
 
+/**
+ * Draw line
+ */
 function line(fromX, fromY, toX, toY, options) {
   const {
     color = '#fff',
@@ -37,6 +43,9 @@ function line(fromX, fromY, toX, toY, options) {
   context.stroke();
 }
 
+/**
+ * Draw dashed line
+ */
 function dashedLine(xFrom, yFrom, xTo, yTo, options) {
   const {
     dashLen = 10,
@@ -55,7 +64,9 @@ function dashedLine(xFrom, yFrom, xTo, yTo, options) {
   context.stroke();
 }
 
-
+/**
+ * Draw rectangle
+ */
 function rect(x, y, w, h, options) {
   const {
     color = '#fff',

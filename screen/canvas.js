@@ -51,11 +51,11 @@ function onResize(initial) {
 function draw() {
   context.clearRect(0, 0, screenWidth, screenHeight);
 
+  drawLinearInterpolationExample();
   // drawBilinearInterpolationExample();
-  // drawLinearInterpolationExample();
-  drawWhiteNoiseExample();
+  // drawWhiteNoiseExample();
 
-  console.log('redrawed');
+  console.log('Redrawed.');
 }
 
 onResize(true);
