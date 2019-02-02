@@ -1,26 +1,12 @@
 const DEVICE_PIXEL_RATIO = window.devicePixelRatio;
 const body = document.body;
 
-let screenWidth;
-let screenHeight;
-let mouseX;
-let mouseY;
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d');
 
-function createCanvas() {
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-
-  context.imageSmoothingQuality = 'high'
-  context.imageSmoothingEnabled = true;
-  context.translate(0.5, 0.5);
-
-  canvas.context = context;
-
-  return canvas;
-}
-
-const canvas = createCanvas();
-const context = canvas.context;
+context.imageSmoothingQuality = 'high'
+context.imageSmoothingEnabled = true;
+context.translate(0.5, 0.5);
 
 function onMouseMove(e) {
   mouseX = e.clientX;
@@ -28,7 +14,7 @@ function onMouseMove(e) {
 }
 
 let onResizeDrawDebounce;
-function onResize(initial) {
+function onResize(redraw) {
   screenWidth = body.clientWidth;
   screenHeight = body.clientHeight;
 
@@ -40,27 +26,13 @@ function onResize(initial) {
 
   context.scale(DEVICE_PIXEL_RATIO, DEVICE_PIXEL_RATIO);
 
-  if (initial === true) {
-    return;
+  if (redraw) {
+    clearTimeout(onResizeDrawDebounce);
+    onResizeDrawDebounce = setTimeout(draw, 300);
   }
-
-  clearTimeout(onResizeDrawDebounce);
-  onResizeDrawDebounce = setTimeout(draw, 300);
 }
-
-function draw() {
-  context.clearRect(0, 0, screenWidth, screenHeight);
-
-  drawLinearInterpolationExample();
-  // drawBilinearInterpolationExample();
-  // drawWhiteNoiseExample();
-
-  console.log('Redrawed.');
-}
-
-onResize(true);
-draw();
 
 window.addEventListener('mousemove', onMouseMove);
-window.addEventListener('resize', onResize);
+window.addEventListener('resize', () => onResize(true));
+
 body.appendChild(canvas);

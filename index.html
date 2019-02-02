@@ -3,17 +3,52 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Procedural Generation @ ramesaliyev</title>
+  <title>Procedural Generation Visualisations @ ramesaliyev</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
 </head>
 <body>
+  <canvas id="canvas"></canvas>
+  <div class="root">
+    <div class="panel">
+      <h2>Procedural<br />Generation<br />Visualisations</h2>
+      <div class="input-wrapper">
+        <div class="input-name">Visualisation</div>
+        <div class="input-content">
+          <select id="visualisationSelect" class="input-element input-select">
+            <option value="1d-line" selected>1D Line</option>
+            <option value="1d-colorful-line">1D Colorful Line</option>
+          </select>
+        </div>
+      </div>
+      <div class="input-wrapper">
+        <div class="input-name">Method</div>
+        <div class="input-content">
+          <select id="methodSelect" class="input-element input-select">
+            <option value="value-noise" selected>Value Noise</option>
+            <option value="white-noise">White Noise</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Utils -->
   <script src="utils/math.js"></script>
   <script src="utils/draw.js"></script>
-  <script src="methods/linear-interpolation.js"></script>
-  <script src="methods/bilinear-interpolation.js"></script>
+
+  <!-- Procedural Generation Methods -->
+  <script src="methods/value-noise-1d.js"></script>
   <script src="methods/white-noise.js"></script>
-  <script src="methods/perlin-noise.js"></script>
+
+  <!-- Procedural Generation Visualisations -->
+  <script src="visualisations/1d-line.js"></script>
+  <script src="visualisations/1d-colorful-line.js"></script>
+
+  <!-- Main -->
+  <script src="screen/globals.js"></script>
   <script src="screen/canvas.js"></script>
+  <script src="screen/ui.js"></script>
+  <script src="screen/draw.js"></script>
 </body>
 </html

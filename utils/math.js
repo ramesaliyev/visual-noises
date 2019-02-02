@@ -5,20 +5,23 @@ const max = Math.max;
 const min = Math.min;
 const ceil = Math.ceil;
 const floor = Math.floor;
+const cos = Math.cos;
+const pow = Math.pow;
 
 /**
  * Constants
  */
-const TWO_PI = Math.PI * 2;
+const PI = Math.PI;
+const TWO_PI = PI * 2;
 
 /**
  * Linear Congruential Generator
  */
 const LCGMultiplier = 1664525;
 const LCGIncrement = 1013904223;
-const LCGModulus = Math.pow(2, 32);
-let LCGSeed = Date.now();
+const LCGModulus = pow(2, 32);
 
+let LCGSeed = Date.now();
 function setRandomSeed(seed) {
   LCGSeed = seed;
 }
@@ -38,8 +41,16 @@ function srandRange(min, max) {
 /**
  * Filter methods
  */
-function fade(t) {
-  return t*t*t*(t*(t*6-15)+10);
+function fadeFilter(t) {
+  return t * t * t * (t * (t * 6 - 15) + 10);
+}
+
+function cosFilter(t) {
+  return (1 - cos(t * PI)) * 0.5;
+}
+
+function smoothStepFilter(t) {
+  return t * t * (3 - 2 * t);
 }
 
 /**
@@ -78,4 +89,18 @@ function bilerp(c00, c10, c01, c11, tx, ty) {
     lerp(c00, c10, tx),
     ty
   );
+}
+
+/**
+ * Map number n which between the range a..b to another range x..y
+ */
+function map(currFrom, currTo, targetFrom, targetTo, n) {
+  return ((n - currFrom) / (currTo - currFrom) * (targetTo - targetFrom)) + targetFrom;
+}
+
+/**
+ * Constrain number between min max.
+ */
+function constrain(low, high, n) {
+  return max(min(n, high), low);
 }
