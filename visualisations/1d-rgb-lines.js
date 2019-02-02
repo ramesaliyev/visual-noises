@@ -22,8 +22,9 @@ function draw1DRGBLines({
     const g = map(0, 1, 0, 255, gY / amplitude);
     const b = map(0, 1, 0, 255, bY / amplitude);
 
-    line(xPos, yPosBase - rY, xPos, yPosBase - rY - 1, {color: `rgb(${r}, ${g}, ${b})`});
-    line(xPos, yPosBase - gY, xPos, yPosBase - gY - 1, {color: `rgb(${r}, ${g}, ${b})`});
-    line(xPos, yPosBase - bY, xPos, yPosBase - bY - 1, {color: `rgb(${r}, ${g}, ${b})`});
+    line(xPos, 100, xPos, 101, {color: `rgb(${r}, ${g}, ${b})`});
+    line(xPos, yPosBase - rY, xPos, yPosBase - rY - 1, {color: `rgb(${r}, ${0}, ${0})`});
+    line(xPos, yPosBase - gY, xPos, yPosBase - gY - 1, {color: `rgb(${0}, ${g}, ${0})`});
+    line(xPos, yPosBase - bY, xPos, yPosBase - bY - 1, {color: `rgb(${0}, ${0}, ${b})`});
   }
 }
