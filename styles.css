@@ -55,9 +55,19 @@ html, body {
   border-radius: 3px;
   font-size: 14px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .input-select {
   -webkit-appearance: none;
   appearance: none;
+}
+
+.input-button {
+  margin-bottom: 2px;
+}
+
+.input-button:hover {
+  opacity: 0.9;
+  cursor: pointer;
 }

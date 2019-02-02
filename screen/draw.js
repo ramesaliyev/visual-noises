@@ -24,7 +24,10 @@ function draw() {
     height: screenHeight - 200
   });
 
-  offset += 0.01;
+  if (!paused) {
+    offsetInput.value = parseFloat(offset.toFixed('10'));
+    offset += speed;
+  }
 
   window.requestAnimationFrame(draw);
 }
