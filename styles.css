@@ -47,6 +47,13 @@ html, body {
   border-right: 1px solid #333;
 }
 
+.page-title {
+  font-size: 52px;
+  text-align: center;
+  color: #333;
+  line-height: 47px;
+}
+
 .input-wrapper {
   padding: 10px 0;
 }
@@ -74,6 +81,8 @@ html, body {
   font-size: 14px;
   width: 100%;
   box-sizing: border-box;
+  background: #333;
+  color: #e0e0e0;
 }
 
 .input-select {
