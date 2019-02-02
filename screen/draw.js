@@ -1,10 +1,12 @@
 function draw() {
-  // context.clearRect(0, 0, screenWidth, screenHeight);
-
-  context.globalAlpha = 0.9;
-  context.fillStyle = '#000';
-  context.fillRect(0, 0, screenWidth, screenHeight);
-  context.globalAlpha = 1;
+  if (leaveTail) {
+    context.globalAlpha = 0.1;
+    context.fillStyle = '#000';
+    context.fillRect(0, 0, screenWidth, screenHeight);
+    context.globalAlpha = 1;
+  } else {
+    context.clearRect(0, 0, screenWidth, screenHeight);
+  }
 
   const {
     visualisationFn,
@@ -23,10 +25,11 @@ function draw() {
         srand()
       ]
     })),
+    seed,
     offsetX: 200,
     offsetY: 0,
     width: screenWidth - 200,
-    height: screenHeight
+    height: screenHeight - 100
   });
 
   if (!paused) {

@@ -5,6 +5,9 @@ function draw1DColorfulLine({
   width,
   height
 }) {
+  context.clearRect(offsetX, height-1, offsetX + width, 3);
+  dashedLine(offsetX, height, offsetX + width, height, {color:'#333'});
+
   for (let x = 0; x < width; x++) {
     const value = getValueFn(x);
     const y = value[0];
