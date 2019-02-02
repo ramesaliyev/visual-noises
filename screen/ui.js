@@ -1,6 +1,7 @@
 const visualisationFnsMap = {
   '1d-line': draw1DLine,
-  '1d-colorful-line': draw1DColorfulLine
+  '1d-colorful-line': draw1DColorfulLine,
+  '1d-rgb-lines': draw1DRGBLines
 };
 
 const methodFnsMap = {

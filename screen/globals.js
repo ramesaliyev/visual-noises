@@ -9,7 +9,7 @@ let method = 'value-noise';
 const DEFAULT_SPEED = 0.01;
 const DEFAULT_OFFSET = 0;
 const DEFAULT_AMPLITUDE = 1000;
-const DEFAULT_FREQUENCY = 0.001;
+const DEFAULT_FREQUENCY = 0.0005;
 
 let paused = false;
 let speed;
