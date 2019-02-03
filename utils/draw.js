@@ -83,3 +83,21 @@ function rect(x, y, w, h, options) {
   context.closePath();
   fill ? context.fill() : context.stroke();
 };
+
+/**
+ * Draw text.
+ */
+const text = (x, y, text, options = {}) => {
+  const {
+    color = '#fff',
+    size = 14,
+    align = 'center',
+    baseline = 'bottom',
+  } = options;
+
+  context.font = `${size}px sans-serif`;
+  context.textBaseline = baseline;
+  context.textAlign = align;
+  context.fillStyle = color;
+  context.fillText(text, x, y);
+};
