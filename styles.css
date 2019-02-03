@@ -94,9 +94,18 @@ html, body {
   margin-bottom: 2px;
 }
 
+.input-button:disabled {
+  opacity: 0.5;
+}
+
 .input-button:hover {
   opacity: 0.9;
   cursor: pointer;
+}
+
+.input-button:disabled:hover {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .input-checkbox {

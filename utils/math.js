@@ -85,8 +85,8 @@ function lerp(a, b, t) {
 
 function bilerp(c00, c10, c01, c11, tx, ty) {
   return lerp(
-    lerp(c01, c11, tx),
     lerp(c00, c10, tx),
+    lerp(c01, c11, tx),
     ty
   );
 }

@@ -8,7 +8,6 @@ function ValueNoise1D({
   frequency = 1,
   amplitude = 1,
   offset = 0,
-  log = false,
   seed,
   x: value, // only required value
 }) {
@@ -40,14 +39,6 @@ function ValueNoise1D({
   // Get vertices.
   const leftVertexValue = randoms[leftVertexIndex];
   const rightVertexValue = randoms[rightVertexIndex];
-
-  if (log) {
-    console.log({
-      value, x, xInt, tx,
-      leftVertexIndex, rightVertexIndex,
-      leftVertexValue, rightVertexValue
-    });
-  }
 
   return multiply(
     lerp(leftVertexValue, rightVertexValue, filterFn(tx)),

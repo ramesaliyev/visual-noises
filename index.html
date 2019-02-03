@@ -24,6 +24,7 @@
             <option value="1d-colorful-ball">1D Colorful Ball</option>
             <option value="1d-radius-ball">1D Radius Ball</option>
             <option value="1d-colorful-triangle">1D Colorful Triangle</option>
+            <option value="2d-static-image">2D Static Image</option>
           </select>
         </div>
       </div>
@@ -31,8 +32,9 @@
         <div class="input-name">Method</div>
         <div class="input-content">
           <select id="methodSelect" class="input-element input-select">
-            <option value="value-noise" selected>Value Noise</option>
             <option value="white-noise">White Noise</option>
+            <option value="value-noise-1d" selected>Value Noise 1D</option>
+            <option value="value-noise-2d">Value Noise 2D</option>
           </select>
         </div>
       </div>
@@ -74,6 +76,7 @@
       <div class="input-wrapper">
         <div class="input-name">Actions</div>
         <div class="input-content">
+          <button id="drawButton" disabled class="input-element input-button">Draw</button>
           <button id="playPauseButton" class="input-element input-button">Play / Pause</button>
           <button id="resetToDefaultsButton" class="input-element input-button">Reset to Defaults</button>
           <button id="resetOffsetButton" class="input-element input-button">Reset Offset</button>
@@ -100,6 +103,7 @@
 
   <!-- Procedural Generation Methods -->
   <script src="methods/value-noise-1d.js"></script>
+  <script src="methods/value-noise-2d.js"></script>
   <script src="methods/white-noise.js"></script>
 
   <!-- Procedural Generation Visualisations -->
@@ -111,6 +115,7 @@
   <script src="visualisations/1d-colorful-ball.js"></script>
   <script src="visualisations/1d-radius-ball.js"></script>
   <script src="visualisations/1d-colorful-triangle.js"></script>
+  <script src="visualisations/2d-static-image.js"></script>
 
   <!-- Main -->
   <script src="screen/globals.js"></script>

@@ -15,8 +15,9 @@ function draw() {
   } = getCurrentState();
 
   visualisationFn({
-    getValueFn: (x => methodFn({
+    getValueFn: ((x, y=0) => methodFn({
       x,
+      y,
       amplitude,
       frequency,
       offset,
@@ -39,7 +40,8 @@ function draw() {
     offset += speed;
   }
 
-  window.requestAnimationFrame(draw);
+  if (stopped) console.log('Draw Completed.');
+  !stopped && window.requestAnimationFrame(draw);
 }
 
 onResize();
