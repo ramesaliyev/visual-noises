@@ -4,7 +4,8 @@ const visualisationFnsMap = {
   '1d-rgb-lines': draw1DRGBLines,
   '1d-ball': draw1DBall,
   '1d-colorful-ball': draw1DColorfulBall,
-  '1d-radius-ball': draw1DRadiusBall
+  '1d-radius-ball': draw1DRadiusBall,
+  '1d-colorful-triangle': draw1DColorfulTriangle
 };
 
 const methodFnsMap = {

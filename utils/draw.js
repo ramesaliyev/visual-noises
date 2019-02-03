@@ -62,6 +62,7 @@ function dashedLine(xFrom, yFrom, xTo, yTo, options) {
   context.moveTo(xFrom, yFrom);
   context.lineTo(xTo, yTo);
   context.stroke();
+  context.setLineDash([]);
 }
 
 /**
