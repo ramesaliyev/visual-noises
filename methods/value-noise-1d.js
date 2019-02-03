@@ -1,10 +1,9 @@
-const DEFAULT_MAX_VERTICES = 256;
-
-const randomsBySeed = {};
+const VALUE_NOISE_1D_DEFAULT_MAX_VERTICES = 256;
+const ValueNoise1DRandomsBySeed = {};
 
 function ValueNoise1D({
-  maxVertices = DEFAULT_MAX_VERTICES,
   getRandomFn = srand,
+  maxVertices = VALUE_NOISE_1D_DEFAULT_MAX_VERTICES,
   filterFn = cosFilter,
   frequency = 1,
   amplitude = 1,
@@ -19,10 +18,10 @@ function ValueNoise1D({
     setRandomSeed(seed);
   }
 
-  let randoms = randomsBySeed[seed];
+  let randoms = ValueNoise1DRandomsBySeed[seed];
 
   if (!randoms) {
-    randomsBySeed[seed] = randoms = [];
+    ValueNoise1DRandomsBySeed[seed] = randoms = [];
 
     for (let i = 0; i < maxVertices; i++) {
       randoms[i] = getRandomFn();
@@ -31,26 +30,27 @@ function ValueNoise1D({
 
   // Floor
   const x = (value * frequency) + offset;
-  const xInt = floor(x) - (x < 0 && x !== floor(x));
+  const xInt = floor(x);
   const tx = x - xInt;
 
   // Modulo using &
-  const xMin = xInt & maxVerticesMask;
-  const xMax = (xMin + 1) & maxVerticesMask;
+  const leftVertexIndex = xInt & maxVerticesMask;
+  const rightVertexIndex = (leftVertexIndex + 1) & maxVerticesMask;
 
   // Get vertices.
-  const leftVertex = randoms[xMin];
-  const rightVertex = randoms[xMax];
+  const leftVertexValue = randoms[leftVertexIndex];
+  const rightVertexValue = randoms[rightVertexIndex];
 
   if (log) {
     console.log({
-      value, x, xInt, tx, xMin, xMax,
-      leftVertex, rightVertex
+      value, x, xInt, tx,
+      leftVertexIndex, rightVertexIndex,
+      leftVertexValue, rightVertexValue
     });
   }
 
   return multiply(
-    lerp(leftVertex, rightVertex, filterFn(tx)),
+    lerp(leftVertexValue, rightVertexValue, filterFn(tx)),
     amplitude
   );
 }
