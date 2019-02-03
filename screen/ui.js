@@ -1,6 +1,7 @@
 const visualisationFnsMap = {
   '1d-line': draw1DLine,
   '1d-colorful-line': draw1DColorfulLine,
+  '1d-color-gradient': draw1DColorGradient,
   '1d-rgb-lines': draw1DRGBLines,
   '1d-ball': draw1DBall,
   '1d-colorful-ball': draw1DColorfulBall,
