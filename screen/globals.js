@@ -5,6 +5,7 @@ let mouseY;
 
 let visualisation = '1d-line';
 let method = 'value-noise';
+let filter = 'cosine';
 
 const DEFAULT_SPEED = 0.01;
 const DEFAULT_OFFSET = 0;

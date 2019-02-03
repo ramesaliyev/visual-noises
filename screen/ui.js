@@ -19,8 +19,16 @@ const methodFnsMap = {
   }
 };
 
+const filterFnsMap = {
+  'none': x => x,
+  'cosine': cosFilter,
+  'smoothstep': smoothStepFilter,
+  'fade': fadeFilter,
+};
+
 const visualisationSelect = document.getElementById('visualisationSelect');
 const methodSelect = document.getElementById('methodSelect');
+const filterSelect = document.getElementById('filterSelect');
 const speedInput = document.getElementById('speedInput');
 const offsetInput = document.getElementById('offsetInput');
 const frequencyInput = document.getElementById('frequencyInput');
@@ -49,16 +57,25 @@ function getCurrentState() {
   const dimension = visualisation.split('-')[0];
   const visualisationFn = visualisationFnsMap[visualisation];
   const methodFn = methodFnsMap[method][dimension];
+  const filterFn = filterFnsMap[filter];
 
   return {
     visualisationFn,
-    methodFn
+    methodFn,
+    filterFn
   }
 }
 
 function pauseOnFocus(element) {
-  element.addEventListener('focus', e => paused = true);
-  element.addEventListener('blur', e => paused = false);
+  let prevPaused;
+  element.addEventListener('focus', e => {
+    prevPaused = paused;
+    paused = true;
+  });
+
+  element.addEventListener('blur', e => {
+    paused = prevPaused;
+  });
 }
 
 function onChange(element, fn) {
@@ -79,6 +96,7 @@ function onChangeGetInt(element, fn) {
 
 onChange(visualisationSelect, val => visualisation = val);
 onChange(methodSelect, val => method = val);
+onChange(filterSelect, val => filter = val);
 
 onChangeGetFloat(speedInput, val => speed = val);
 onChangeGetFloat(offsetInput, val => offset = val);

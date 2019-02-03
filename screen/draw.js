@@ -10,7 +10,8 @@ function draw() {
 
   const {
     visualisationFn,
-    methodFn
+    methodFn,
+    filterFn
   } = getCurrentState();
 
   visualisationFn({
@@ -19,6 +20,7 @@ function draw() {
       amplitude,
       frequency,
       offset,
+      filterFn,
       getRandomFn: () => [ // Always create vector3 to make it easy to use as RGB in colorful visualisations.
         srand(),
         srand(),
