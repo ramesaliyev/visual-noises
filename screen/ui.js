@@ -154,5 +154,5 @@ onCheck(tailInput, val => leaveTail = val);
 
 on(drawButton, 'click', () => draw());
 on(playPauseButton, 'click', () => {paused = !paused});
-on(resetToDefaultsButton, 'click', resetValues);
+on(resetToDefaultsButton, 'click', () => resetValues());
 on(resetOffsetButton, 'click', () => offset = 0);

@@ -7,7 +7,7 @@ let visualisation = '1d-line';
 let method = 'value-noise-1d';
 let filter = 'smoothstep';
 
-const DEFAULT_SPEED = -0.01;
+const DEFAULT_SPEED = 0.01;
 const DEFAULT_OFFSET = 0;
 const DEFAULT_AMPLITUDE = 500;
 const DEFAULT_FREQUENCY = 0.0005;
