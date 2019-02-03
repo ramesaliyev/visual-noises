@@ -7,7 +7,8 @@ const visualisationFnsMap = {
   '1d-colorful-ball': draw1DColorfulBall,
   '1d-radius-ball': draw1DRadiusBall,
   '1d-colorful-triangle': draw1DColorfulTriangle,
-  '2d-static-image': draw2DStaticImage
+  '2d-static-image': draw2DStaticImage,
+  '2d-colorful-image': draw2DColorfulImage,
 };
 
 const methodFnsMap = {
@@ -24,7 +25,8 @@ const filterFnsMap = {
 };
 
 const visualisationDefaults = {
-  '2d-static-image': {speed: 0, offset: 0, amplitude: 1.2, frequency: 0.04}
+  '2d-static-image': {speed: 0, offset: 0, amplitude: 1.2, frequency: 0.04},
+  '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.2, frequency: 0.04}
 };
 
 const visualisationSelect = document.getElementById('visualisationSelect');
