@@ -114,6 +114,7 @@ onChange(visualisationSelect, val => {
     stopped = false;
     drawButton.disabled = true;
     playPauseButton.disabled = false;
+    draw();
   }
 
   if (dimension === '2d') {
