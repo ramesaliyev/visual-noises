@@ -1,3 +1,31 @@
+const visualisationSelect = document.getElementById('visualisationSelect');
+const methodSelect = document.getElementById('methodSelect');
+const filterSelect = document.getElementById('filterSelect');
+const speedInput = document.getElementById('speedInput');
+const offsetInput = document.getElementById('offsetInput');
+const frequencyInput = document.getElementById('frequencyInput');
+const amplitudeInput = document.getElementById('amplitudeInput');
+const drawButton = document.getElementById('drawButton');
+const playPauseButton = document.getElementById('playPauseButton');
+const resetOffsetButton = document.getElementById('resetOffsetButton');
+const seedInput = document.getElementById('seedInput');
+const tailInput = document.getElementById('tailInput');
+
+const elements = [
+  visualisationSelect,
+  methodSelect,
+  filterSelect,
+  speedInput,
+  offsetInput,
+  frequencyInput,
+  amplitudeInput,
+  drawButton,
+  playPauseButton,
+  resetOffsetButton,
+  seedInput,
+  tailInput,
+];
+
 const visualisationFnsMap = {
   '1d-line': draw1DLine,
   '1d-colorful-line': draw1DColorfulLine,
@@ -25,45 +53,29 @@ const filterFnsMap = {
 };
 
 const visualisationDefaults = {
-  '2d-static-image': {speed: 0, offset: 0, amplitude: 1.2, frequency: 0.04},
-  '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.2, frequency: 0.04}
+  '1d-line': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
+  '1d-colorful-line': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
+  '1d-color-gradient': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
+  '1d-rgb-lines': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
+  '1d-ball': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
+  '1d-colorful-ball': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
+  '1d-radius-ball': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
+  '1d-colorful-triangle': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
+  '2d-static-image': {speed: 0, offset: 0, amplitude: 1.2, frequency: 0.04, disable: [playPauseButton, speedInput]},
+  '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.2, frequency: 0.04, disable: [playPauseButton, speedInput]}
 };
 
-const visualisationSelect = document.getElementById('visualisationSelect');
-const methodSelect = document.getElementById('methodSelect');
-const filterSelect = document.getElementById('filterSelect');
-const speedInput = document.getElementById('speedInput');
-const offsetInput = document.getElementById('offsetInput');
-const frequencyInput = document.getElementById('frequencyInput');
-const amplitudeInput = document.getElementById('amplitudeInput');
-const drawButton = document.getElementById('drawButton');
-const playPauseButton = document.getElementById('playPauseButton');
-const resetToDefaultsButton = document.getElementById('resetToDefaultsButton');
-const resetOffsetButton = document.getElementById('resetOffsetButton');
-const seedInput = document.getElementById('seedInput');
-const tailInput = document.getElementById('tailInput');
-
-function resetValues(
-  _speed = DEFAULT_SPEED,
-  _offset = DEFAULT_OFFSET,
-  _amplitude = DEFAULT_AMPLITUDE,
-  _frequency = DEFAULT_FREQUENCY
-) {
-  speed = _speed;
-  offset = _offset;
-  amplitude = _amplitude;
-  frequency = _frequency;
-  speedInput.value = speed;
-  offsetInput.value = offset;
-  frequencyInput.value = frequency;
-  amplitudeInput.value = amplitude;
+function setDefaults(defaults) {
+  speedInput.value = speed = (typeof defaults.speed !== undefined ? defaults.speed : speed);
+  offsetInput.value = offset = (typeof defaults.offset !== undefined ? defaults.offset : offset);
+  frequencyInput.value = frequency = (typeof defaults.frequency !== undefined ? defaults.frequency : frequency);
+  amplitudeInput.value = amplitude = (typeof defaults.amplitude !== undefined ? defaults.amplitude : amplitude);
   seedInput.value = seed;
 }
 
-resetValues();
+setDefaults(visualisationDefaults['1d-line']);
 
 function getCurrentState() {
-  const dimension = visualisation.split('-')[0];
   const visualisationFn = visualisationFnsMap[visualisation];
   const methodFn = methodFnsMap[method];
   const filterFn = filterFnsMap[filter];
@@ -81,14 +93,8 @@ function on(element, eventName, fn) {
 
 function pauseOnFocus(element) {
   let prevPaused;
-  on(element, 'focus', e => {
-    prevPaused = paused;
-    paused = true;
-  });
-
-  on(element, 'blur', e => {
-    paused = prevPaused;
-  });
+  on(element, 'focus', e => {prevPaused = paused; paused = true});
+  on(element, 'blur', e => {paused = prevPaused});
 }
 
 function onChange(element, fn) {
@@ -108,31 +114,31 @@ function onChangeGetInt(element, fn) {
 }
 
 onChange(visualisationSelect, val => {
+  const oldVisualisation = visualisation;
   visualisation = val;
 
-  const dimension = val.split('-')[0];
+  elements.forEach(element => element.disabled = false);
+
+  const oldDimension = oldVisualisation.split('-')[0];
+  const dimension = visualisation.split('-')[0];
 
   if (dimension === '1d') {
     stopped = false;
-    drawButton.disabled = true;
-    playPauseButton.disabled = false;
-    draw();
+    draw(true);
   }
 
   if (dimension === '2d') {
     stopped = true;
-    drawButton.disabled = false;
-    playPauseButton.disabled = true;
   }
 
   const defaults = visualisationDefaults[val];
-  if (defaults) {
-    resetValues(
-      defaults.speed,
-      defaults.offset,
-      defaults.amplitude,
-      defaults.frequency
-    );
+
+  if (defaults && oldDimension !== dimension) {
+    setDefaults(defaults);
+  }
+
+  if (defaults && defaults.disable) {
+    defaults.disable.forEach(element => element.disabled = true);
   }
 });
 
@@ -152,7 +158,10 @@ onChangeGetInt(seedInput, val => {
 
 onCheck(tailInput, val => leaveTail = val);
 
-on(drawButton, 'click', () => draw());
-on(playPauseButton, 'click', () => {paused = !paused});
-on(resetToDefaultsButton, 'click', () => resetValues());
+on(drawButton, 'click', () => draw(false));
+on(playPauseButton, 'click', () => {
+  paused = !paused;
+  playPauseButton.innerText = paused ? 'Start Auto Draw' : 'Auto Drawing';
+  playPauseButton.style.color = paused ? '#e0e0e0' : 'yellowgreen';
+});
 on(resetOffsetButton, 'click', () => offset = 0);

@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   border: none;
+  outline: none;
 }
 
 html, body {
@@ -94,20 +95,17 @@ html, body {
   margin-bottom: 2px;
 }
 
-.input-button:disabled {
-  opacity: 0.5;
-}
-
 .input-button:hover {
   opacity: 0.9;
   cursor: pointer;
 }
 
-.input-button:disabled:hover {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 .input-checkbox {
   width: 25px;
+}
+
+.input-element:disabled,
+.input-element:disabled:hover {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

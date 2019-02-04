@@ -1,4 +1,4 @@
-function draw() {
+function draw(schedule) {
   if (leaveTail) {
     context.globalAlpha = 0.1;
     context.fillStyle = '#000';
@@ -22,11 +22,7 @@ function draw() {
       frequency,
       offset,
       filterFn,
-      getRandomFn: () => [ // Always create vector3 to make it easy to use as RGB in colorful visualisations.
-        srand(),
-        srand(),
-        srand()
-      ]
+      getRandomFn: () => [srand(), srand(), srand()]  // Always create vector3 to make it easy to use as RGB in colorful visualisations.
     })),
     seed,
     offsetX: 200,
@@ -41,8 +37,8 @@ function draw() {
   }
 
   if (stopped) console.log('Draw Completed.');
-  !stopped && window.requestAnimationFrame(draw);
+  !stopped && schedule && window.requestAnimationFrame(() => draw(true));
 }
 
 onResize();
-draw();
+draw(true);
