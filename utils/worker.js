@@ -31,6 +31,9 @@ function run(fn, globals, done) {
     let offset = ${offset};
     let amplitude = ${amplitude};
     let frequency = ${frequency};
+    let octave = ${octave};
+    let lacunarity = ${lacunarity};
+    let gain = ${gain};
 
     // Value Noise 1D
     const VALUE_NOISE_1D_DEFAULT_MAX_VERTICES = ${VALUE_NOISE_1D_DEFAULT_MAX_VERTICES};

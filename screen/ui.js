@@ -5,6 +5,9 @@ const speedInput = document.getElementById('speedInput');
 const offsetInput = document.getElementById('offsetInput');
 const frequencyInput = document.getElementById('frequencyInput');
 const amplitudeInput = document.getElementById('amplitudeInput');
+const octaveInput = document.getElementById('octaveInput');
+const lacunarityInput = document.getElementById('lacunarityInput');
+const gainInput = document.getElementById('gainInput');
 const drawButton = document.getElementById('drawButton');
 const playPauseButton = document.getElementById('playPauseButton');
 const resetOffsetButton = document.getElementById('resetOffsetButton');
@@ -19,6 +22,9 @@ const elements = [
   offsetInput,
   frequencyInput,
   amplitudeInput,
+  octaveInput,
+  lacunarityInput,
+  gainInput,
   drawButton,
   playPauseButton,
   resetOffsetButton,
@@ -53,16 +59,16 @@ const filterFnsMap = {
 };
 
 const visualisationDefaults = {
-  '1d-line': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
-  '1d-colorful-line': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
-  '1d-color-gradient': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
-  '1d-rgb-lines': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
-  '1d-ball': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
-  '1d-colorful-ball': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
-  '1d-radius-ball': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
-  '1d-colorful-triangle': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005},
-  '2d-static-image': {speed: 0, offset: 0, amplitude: 1.2, frequency: 0.04, disable: [playPauseButton, speedInput]},
-  '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.2, frequency: 0.04, disable: [playPauseButton, speedInput]}
+  '1d-line': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005, octave: 1, lacunarity: 1, gain:1},
+  '1d-colorful-line': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005, octave: 1, lacunarity: 1, gain:1},
+  '1d-color-gradient': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005, octave: 1, lacunarity: 1, gain:1},
+  '1d-rgb-lines': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005, octave: 1, lacunarity: 1, gain:1},
+  '1d-ball': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005, octave: 1, lacunarity: 1, gain:1},
+  '1d-colorful-ball': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005, octave: 1, lacunarity: 1, gain:1},
+  '1d-radius-ball': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005, octave: 1, lacunarity: 1, gain:1},
+  '1d-colorful-triangle': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005, octave: 1, lacunarity: 1, gain:1},
+  '2d-static-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, disable: [playPauseButton, speedInput]},
+  '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, disable: [playPauseButton, speedInput]}
 };
 
 function setDefaults(defaults) {
@@ -70,6 +76,9 @@ function setDefaults(defaults) {
   offsetInput.value = offset = (typeof defaults.offset !== undefined ? defaults.offset : offset);
   frequencyInput.value = frequency = (typeof defaults.frequency !== undefined ? defaults.frequency : frequency);
   amplitudeInput.value = amplitude = (typeof defaults.amplitude !== undefined ? defaults.amplitude : amplitude);
+  octaveInput.value = octave = (typeof defaults.octave !== undefined ? defaults.octave : octave);
+  lacunarityInput.value = lacunarity = (typeof defaults.lacunarity !== undefined ? defaults.lacunarity : lacunarity);
+  gainInput.value = gain = (typeof defaults.gain !== undefined ? defaults.gain : gain);
   seedInput.value = seed;
 }
 
@@ -149,6 +158,9 @@ onChangeGetFloat(speedInput, val => speed = val);
 onChangeGetFloat(offsetInput, val => offset = val);
 onChangeGetFloat(frequencyInput, val => frequency = val);
 onChangeGetFloat(amplitudeInput, val => amplitude = val);
+onChangeGetFloat(octaveInput, val => octave = val);
+onChangeGetFloat(lacunarityInput, val => lacunarity = val);
+onChangeGetFloat(gainInput, val => gain = val);
 pauseOnFocus(offsetInput);
 
 onChangeGetInt(seedInput, val => {

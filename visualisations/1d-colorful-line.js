@@ -15,9 +15,9 @@ function draw1DColorfulLine({
     const xPos = offsetX + x;
     const yPos = offsetY + height - y;
 
-    const r = map(0, 1, 0, 255, value[0] / amplitude);
-    const g = map(0, 1, 0, 255, value[1] / amplitude);
-    const b = map(0, 1, 0, 255, value[2] / amplitude);
+    const r = map(0, amplitude, 0, 255, value[0]);
+    const g = map(0, amplitude, 0, 255, value[1]);
+    const b = map(0, amplitude, 0, 255, value[2]);
 
     line(xPos, yPos, xPos, yPos - 1, {color: `rgb(${r}, ${g}, ${b})`});
   }

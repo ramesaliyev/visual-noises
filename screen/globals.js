@@ -17,3 +17,7 @@ let speed;
 let offset;
 let amplitude;
 let frequency;
+
+let octave = 1;
+let lacunarity = 1;
+let gain = 1;

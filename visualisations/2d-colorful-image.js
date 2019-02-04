@@ -15,9 +15,9 @@ function draw2DColorfulImage({
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        const r = map(0, 1, 0, 255, getValueFn(x/amplitude, y/amplitude)[0] / amplitude);
-        const g = map(0, 1, 0, 255, getValueFn(x/amplitude, y/amplitude)[1] / amplitude);
-        const b = map(0, 1, 0, 255, getValueFn(x/amplitude, y/amplitude)[2] / amplitude);
+        const r = map(0, amplitude, 0, 255, getValueFn(x, y)[0]);
+        const g = map(0, amplitude, 0, 255, getValueFn(x, y)[1]);
+        const b = map(0, amplitude, 0, 255, getValueFn(x, y)[2]);
 
         const xPos = offsetX + x + 100;
         const yPos = offsetY + height + 100 - y;

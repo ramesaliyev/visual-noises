@@ -15,15 +15,24 @@ function draw(schedule) {
   } = getCurrentState();
 
   visualisationFn({
-    getValueFn: ((x, y=0) => methodFn({
-      x,
-      y,
-      amplitude,
-      frequency,
-      offset,
-      filterFn,
-      getRandomFn: () => [srand(), srand(), srand()]  // Always create vector3 to make it easy to use as RGB in colorful visualisations.
-    })),
+    getValueFn: ((x, y=0) => {
+      let noiseSum = [0, 0, 0];
+      let _amplitude = amplitude;
+      let _frequency = frequency;
+
+      for (let i = 0; i < octave; i++) {
+        noiseSum = sum(noiseSum, methodFn({
+          x, y, offset, filterFn,
+          amplitude:_amplitude, frequency:_frequency,
+          getRandomFn: () => [srand(), srand(), srand()]
+        }));
+
+        _frequency *= lacunarity;
+        _amplitude *= gain;
+      }
+
+      return multiply(noiseSum, 1/octave);
+    }),
     seed,
     offsetX: 200,
     offsetY: 0,

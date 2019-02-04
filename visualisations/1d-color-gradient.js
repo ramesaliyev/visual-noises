@@ -10,9 +10,9 @@ function draw1DColorGradient({
 
     const xPos = offsetX + x;
 
-    const r = map(0, 1, 0, 255, values[0] / amplitude);
-    const g = map(0, 1, 0, 255, values[1] / amplitude);
-    const b = map(0, 1, 0, 255, values[2] / amplitude);
+    const r = map(0, amplitude, 0, 255, values[0]);
+    const g = map(0, amplitude, 0, 255, values[1]);
+    const b = map(0, amplitude, 0, 255, values[2]);
 
     line(xPos + 50, offsetY + 50, xPos + 50, offsetY + 150, {color: `rgb(${r}, ${g}, ${b})`});
   }
