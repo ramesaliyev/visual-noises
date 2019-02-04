@@ -1,9 +1,27 @@
 const VALUE_NOISE_2D_DEFAULT_MAX_VERTICES = 256;
+const VALUE_NOISE_2D_DEFAULT_MAX_VERTICES_MASK = VALUE_NOISE_2D_DEFAULT_MAX_VERTICES - 1;
 
 const ValueNoise2DRandomsBySeed = {};
 
+let ValueNoise2DPermutationTable = [];
+
+for (let i = 0; i < VALUE_NOISE_2D_DEFAULT_MAX_VERTICES ; i++) {
+  const table = ValueNoise2DPermutationTable;
+  const randomIndex = srandInt() & VALUE_NOISE_2D_DEFAULT_MAX_VERTICES_MASK;
+
+  const valueAtRandomIndex = table[randomIndex] || randomIndex;
+  const valueAtIndex = table[i] || i;
+
+  table[i] = valueAtRandomIndex
+  table[randomIndex] = valueAtIndex;
+}
+
+ValueNoise2DPermutationTable = [
+  ...ValueNoise2DPermutationTable,
+  ...ValueNoise2DPermutationTable
+];
+
 function ValueNoise2D({
-  maxVertices = VALUE_NOISE_2D_DEFAULT_MAX_VERTICES,
   getRandomFn = srand,
   filterFn = cosFilter,
   frequency = 1,
@@ -13,7 +31,9 @@ function ValueNoise2D({
   x: valueX, // required value
   y: valueY, // required value
 }) {
-  const maxVerticesMask = maxVertices - 1;
+  const maxVertices = VALUE_NOISE_2D_DEFAULT_MAX_VERTICES;
+  const maxVerticesMask = VALUE_NOISE_2D_DEFAULT_MAX_VERTICES_MASK;
+  const permutationTable = ValueNoise2DPermutationTable;
 
   if (seed) {
     setRandomSeed(seed);
@@ -24,7 +44,7 @@ function ValueNoise2D({
   if (!randoms) {
     ValueNoise2DRandomsBySeed[seed] = randoms = [];
 
-    const length = maxVertices * maxVertices;
+    const length = maxVertices;
     for (let i = 0; i < length ; i++) {
       randoms[i] = getRandomFn();
     }
@@ -45,10 +65,10 @@ function ValueNoise2D({
   const topVertexIndex = (bottomVertexIndex + 1) & maxVerticesMask;
 
   // Get vertices.
-  const c00 = randoms[bottomVertexIndex * maxVerticesMask + leftVertexIndex];
-  const c10 = randoms[bottomVertexIndex * maxVerticesMask + rightVertexIndex];
-  const c01 = randoms[topVertexIndex * maxVerticesMask + leftVertexIndex];
-  const c11 = randoms[topVertexIndex * maxVerticesMask + rightVertexIndex];
+  const c00 = randoms[permutationTable[permutationTable[leftVertexIndex] + bottomVertexIndex]];
+  const c10 = randoms[permutationTable[permutationTable[rightVertexIndex] + bottomVertexIndex]];
+  const c01 = randoms[permutationTable[permutationTable[leftVertexIndex] + topVertexIndex]];
+  const c11 = randoms[permutationTable[permutationTable[rightVertexIndex] + topVertexIndex]];
 
   // Retun bilinear interpolation.
   return multiply(

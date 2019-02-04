@@ -1,9 +1,9 @@
 const VALUE_NOISE_1D_DEFAULT_MAX_VERTICES = 256;
+const VALUE_NOISE_1D_DEFAULT_MAX_VERTICES_MASK = VALUE_NOISE_1D_DEFAULT_MAX_VERTICES - 1;
 const ValueNoise1DRandomsBySeed = {};
 
 function ValueNoise1D({
   getRandomFn = srand,
-  maxVertices = VALUE_NOISE_1D_DEFAULT_MAX_VERTICES,
   filterFn = cosFilter,
   frequency = 1,
   amplitude = 1,
@@ -11,7 +11,8 @@ function ValueNoise1D({
   seed,
   x: value, // only required value
 }) {
-  const maxVerticesMask = maxVertices - 1;
+  const maxVertices = VALUE_NOISE_1D_DEFAULT_MAX_VERTICES;
+  const maxVerticesMask = VALUE_NOISE_1D_DEFAULT_MAX_VERTICES_MASK;
 
   if (seed) {
     setRandomSeed(seed);
