@@ -59,6 +59,10 @@ html, body {
   padding: 10px 0;
 }
 
+.input-checkbox-wrapper {
+  padding: 2px 0;
+}
+
 .input-name,
 .input-label {
   color: #999;

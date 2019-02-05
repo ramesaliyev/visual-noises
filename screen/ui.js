@@ -159,7 +159,7 @@ onChange(visualisationSelect, val => {
 
   const defaults = visualisationDefaults[val];
 
-  if (defaults && oldDimension !== dimension) {
+  if (defaults && applyDefaults) {
     setDefaults(defaults);
   }
 
@@ -187,6 +187,7 @@ onChangeGetInt(seedInput, val => {
 });
 
 onCheck(tailInput, val => leaveTail = val);
+onCheck(applyDefaultsInput, val => applyDefaults = val);
 
 on(drawButton, 'click', () => draw(false));
 on(playPauseButton, 'click', () => {

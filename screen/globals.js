@@ -13,6 +13,7 @@ let seed = 1549150175619;
 let stopped = false;
 let paused = false;
 let leaveTail = false;
+let applyDefaults = true;
 
 let speed;
 let offset;

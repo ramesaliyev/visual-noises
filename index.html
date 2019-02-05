@@ -24,12 +24,12 @@
             <option value="1d-colorful-ball">1D Colorful Ball</option>
             <option value="1d-radius-ball">1D Radius Ball</option>
             <option value="1d-colorful-triangle">1D Colorful Triangle</option>
-            <option value="2d-grayscale-image">2D Grayscale Image</option>
-            <option value="2d-colorful-image">2D Colorful Image</option>
-            <option value="2d-marble-image">2D Marble Image</option>
-            <option value="2d-colorful-marble-image">2D Colorful Marble Image</option>
-            <option value="2d-wood-image">2D Wood Image</option>
-            <option value="2d-colorful-wood-image">2D Colorful Wood Image</option>
+            <option value="2d-grayscale-image">2D Grayscale</option>
+            <option value="2d-colorful-image">2D Colorful</option>
+            <option value="2d-marble-image">2D Marble</option>
+            <option value="2d-colorful-marble-image">2D Colorful Marble</option>
+            <option value="2d-wood-image">2D Wood</option>
+            <option value="2d-colorful-wood-image">2D Colorful Wood</option>
           </select>
         </div>
       </div>
@@ -119,10 +119,16 @@
           <input id="seedInput" class="input-element" type="number" />
         </div>
       </div>
-      <div class="input-wrapper">
+      <div class="input-wrapper input-checkbox-wrapper">
         <label class="input-content pointer-cursor flex-row">
           <input id="tailInput" class="input-element input-checkbox" type="checkbox" />
           <div class="input-label">Leave a Tail</div>
+        </label>
+      </div>
+      <div class="input-wrapper input-checkbox-wrapper">
+        <label class="input-content pointer-cursor flex-row">
+          <input id="applyDefaultsInput" class="input-element input-checkbox" type="checkbox" checked />
+          <div class="input-label">Apply Defaults</div>
         </label>
       </div>
     </div>
