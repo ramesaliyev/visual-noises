@@ -15,12 +15,12 @@ function draw2DStaticImage({
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        const color = map(0, amplitude, 0, 255, getValueFn(x, y)[0]);
+        const value = multiply(getValueFn(x, y)[0], octave);
 
         const xPos = offsetX + x + 100;
         const yPos = offsetY + height + 100 - y;
 
-        result.push({xPos, yPos, color});
+        result.push({xPos, yPos, value});
       }
     }
 
@@ -30,8 +30,16 @@ function draw2DStaticImage({
   run(calculate, {getValueFn, height, width, offsetX, offsetY}, result => {
     context.clearRect(0, 0, screenWidth, screenHeight);
 
-    result.forEach(({xPos, yPos, color}) => {
-      context.fillStyle = `rgb(${color}, ${color}, ${color})`;
+    let maxValue = 0;
+
+    result.forEach(({value}) => {
+      maxValue = Math.max(maxValue, value);
+    });
+
+    result.forEach(({xPos, yPos, value}) => {
+      const bw = map(0, maxValue, 0, 255, value);
+
+      context.fillStyle = `rgb(${bw}, ${bw}, ${bw})`;
       context.fillRect(xPos, yPos, 1, 1);
     });
   });

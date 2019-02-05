@@ -15,15 +15,12 @@ function draw2DColorfulImage({
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        const value = getValueFn(x, y);
-        const r = map(0, amplitude, 0, 255, value[0]);
-        const g = map(0, amplitude, 0, 255, value[1]);
-        const b = map(0, amplitude, 0, 255, value[2]);
+        const value = multiply(getValueFn(x, y), octave);
 
         const xPos = offsetX + x + 100;
         const yPos = offsetY + height + 100 - y;
 
-        result.push({xPos, yPos, r, g, b});
+        result.push({xPos, yPos, value});
       }
     }
 
@@ -33,7 +30,17 @@ function draw2DColorfulImage({
   run(calculate, {getValueFn, height, width, offsetX, offsetY}, result => {
     context.clearRect(0, 0, screenWidth, screenHeight);
 
-    result.forEach(({xPos, yPos, r, g, b}) => {
+    let maxValue = 0;
+
+    result.forEach(({value}) => {
+      maxValue = Math.max(maxValue, Math.max(...value));
+    });
+
+    result.forEach(({xPos, yPos, value}) => {
+      const r = map(0, maxValue, 0, 255, value[0]);
+      const g = map(0, maxValue, 0, 255, value[1]);
+      const b = map(0, maxValue, 0, 255, value[2]);
+
       context.fillStyle = `rgb(${r}, ${g}, ${b})`;
       context.fillRect(xPos, yPos, 1, 1);
     });
