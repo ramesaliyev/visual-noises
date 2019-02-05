@@ -41,7 +41,7 @@ const visualisationFnsMap = {
   '1d-colorful-ball': draw1DColorfulBall,
   '1d-radius-ball': draw1DRadiusBall,
   '1d-colorful-triangle': draw1DColorfulTriangle,
-  '2d-static-image': draw2DStaticImage,
+  '2d-grayscale-image': draw2DGrayscaleImage,
   '2d-colorful-image': draw2DColorfulImage,
 };
 
@@ -67,7 +67,7 @@ const visualisationDefaults = {
   '1d-colorful-ball': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005, octave: 1, lacunarity: 1, gain:1},
   '1d-radius-ball': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005, octave: 1, lacunarity: 1, gain:1},
   '1d-colorful-triangle': {speed: 0.01, offset: 0, amplitude: 500, frequency: 0.0005, octave: 1, lacunarity: 1, gain:1},
-  '2d-static-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, disable: [playPauseButton, speedInput]},
+  '2d-grayscale-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, disable: [playPauseButton, speedInput]},
   '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, disable: [playPauseButton, speedInput]}
 };
 

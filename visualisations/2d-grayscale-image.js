@@ -1,4 +1,4 @@
-function draw2DStaticImage({
+function draw2DGrayscaleImage({
   getValueFn,
   offsetX,
   offsetY,
