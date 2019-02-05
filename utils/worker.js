@@ -8,6 +8,7 @@ function run(fn, globals, done) {
     const cos = Math.cos;
     const pow = Math.pow;
     const abs = Math.abs;
+    const sin = Math.sin;
     const LCGMultiplier = ${LCGMultiplier};
     const LCGIncrement = ${LCGIncrement};
     const LCGModulus = ${LCGModulus};

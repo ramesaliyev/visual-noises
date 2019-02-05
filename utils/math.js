@@ -8,6 +8,7 @@ const floor = Math.floor;
 const cos = Math.cos;
 const pow = Math.pow;
 const abs = Math.abs;
+const sin = Math.sin;
 
 /**
  * Constants
