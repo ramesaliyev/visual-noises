@@ -51,8 +51,8 @@ function ValueNoise2D({
   }
 
   // Floor
-  const x = (valueX * frequency) + offset;
-  const y = (valueY * frequency) + offset;
+  const x = (valueX + offset) * frequency;
+  const y = (valueY + offset) * frequency;
   const xInt = floor(x);
   const yInt = floor(y);
   const tx = x - xInt;

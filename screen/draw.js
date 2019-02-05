@@ -23,7 +23,8 @@ function draw(schedule) {
       for (let i = 0; i < octave; i++) {
         noiseSum = sum(noiseSum, methodFn({
           x, y, offset, filterFn,
-          amplitude:_amplitude, frequency:_frequency,
+          amplitude:_amplitude,
+          frequency:_frequency,
           getRandomFn: () => [srand(), srand(), srand()]
         }));
 

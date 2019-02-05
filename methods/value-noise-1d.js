@@ -29,7 +29,7 @@ function ValueNoise1D({
   }
 
   // Floor
-  const x = (value * frequency) + offset;
+  const x = (value + offset) * frequency;
   const xInt = floor(x);
   const tx = x - xInt;
 
