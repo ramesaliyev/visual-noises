@@ -7,6 +7,7 @@ const ceil = Math.ceil;
 const floor = Math.floor;
 const cos = Math.cos;
 const pow = Math.pow;
+const abs = Math.abs;
 
 /**
  * Constants
@@ -54,8 +55,20 @@ function smoothStepFilter(t) {
 }
 
 /**
+ * Output filter methods.
+ */
+function turbulenceOFilter(x) {
+  return vec(x, t => abs((2 * t) - 1));
+}
+
+/**
  * Vectors
  */
+function vec(a, fn) {
+  a = typeof a === 'number' ? [a] : a;
+  return a.map(fn);
+}
+
 function vectorize(a, b) {
   a = typeof a === 'number' ? [a] : a;
   b = typeof b === 'number' ? new Array(a.length).fill(b) : b;
@@ -63,14 +76,17 @@ function vectorize(a, b) {
   return [a, b];
 }
 
-function multiply(a, b) {
+function mapVec2(a, b, fn) {
   [a, b] = vectorize(a, b);
-  return a.map((v, i) => v * b[i]);
+  return a.map((v, i) => fn(v, b[i]));
+}
+
+function multiply(a, b) {
+  return mapVec2(a, b, (x, y) => x * y);
 }
 
 function sum(a, b) {
-  [a, b] = vectorize(a, b);
-  return a.map((v, i) => v + b[i]);
+  return mapVec2(a, b, (x, y) => x + y);
 }
 
 /**
@@ -103,4 +119,11 @@ function map(currFrom, currTo, targetFrom, targetTo, n) {
  */
 function constrain(low, high, n) {
   return max(min(n, high), low);
+}
+
+/**
+ * Misc
+ */
+function id(t) {
+  return t;
 }

@@ -11,7 +11,8 @@ function draw(schedule) {
   const {
     visualisationFn,
     methodFn,
-    filterFn
+    filterFn,
+    outputFilterFn,
   } = getCurrentState();
 
   visualisationFn({
@@ -21,12 +22,15 @@ function draw(schedule) {
       let _frequency = frequency;
 
       for (let i = 0; i < octave; i++) {
-        noiseSum = sum(noiseSum, methodFn({
-          x, y, offset, filterFn,
+        let output = methodFn({
+          x, y, offset,
+          filterFn, outputFilterFn,
           amplitude:_amplitude,
           frequency:_frequency,
           getRandomFn: () => [srand(), srand(), srand()]
-        }));
+        });
+
+        noiseSum = sum(noiseSum, output);
 
         _frequency *= lacunarity;
         _amplitude *= gain;

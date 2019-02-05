@@ -6,6 +6,7 @@ let mouseY;
 let visualisation = '1d-line';
 let method = 'value-noise-1d';
 let filter = 'smoothstep';
+let outputFilter = 'none';
 
 let seed = 1549150175619;
 

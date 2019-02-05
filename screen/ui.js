@@ -1,6 +1,7 @@
 const visualisationSelect = document.getElementById('visualisationSelect');
 const methodSelect = document.getElementById('methodSelect');
 const filterSelect = document.getElementById('filterSelect');
+const outputFilterSelect = document.getElementById('outputFilterSelect');
 const speedInput = document.getElementById('speedInput');
 const offsetInput = document.getElementById('offsetInput');
 const frequencyInput = document.getElementById('frequencyInput');
@@ -18,6 +19,7 @@ const elements = [
   visualisationSelect,
   methodSelect,
   filterSelect,
+  outputFilterSelect,
   speedInput,
   offsetInput,
   frequencyInput,
@@ -52,10 +54,15 @@ const methodFnsMap = {
 };
 
 const filterFnsMap = {
-  'none': x => x,
+  'none': id,
   'cosine': cosFilter,
   'smoothstep': smoothStepFilter,
   'fade': fadeFilter,
+};
+
+const outputFilterFnsMap = {
+  'none': id,
+  'turbulance': turbulenceOFilter,
 };
 
 const visualisationDefaults = {
@@ -88,11 +95,13 @@ function getCurrentState() {
   const visualisationFn = visualisationFnsMap[visualisation];
   const methodFn = methodFnsMap[method];
   const filterFn = filterFnsMap[filter];
+  const outputFilterFn = outputFilterFnsMap[outputFilter];
 
   return {
     visualisationFn,
     methodFn,
-    filterFn
+    filterFn,
+    outputFilterFn
   }
 }
 
@@ -153,6 +162,7 @@ onChange(visualisationSelect, val => {
 
 onChange(methodSelect, val => method = val);
 onChange(filterSelect, val => filter = val);
+onChange(outputFilterSelect, val => outputFilter = val);
 
 onChangeGetFloat(speedInput, val => speed = val);
 onChangeGetFloat(offsetInput, val => offset = val);

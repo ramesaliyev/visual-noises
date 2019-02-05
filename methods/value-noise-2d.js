@@ -24,6 +24,7 @@ ValueNoise2DPermutationTable = [
 function ValueNoise2D({
   getRandomFn = srand,
   filterFn = cosFilter,
+  outputFilterFn = id,
   frequency = 1,
   amplitude = 1,
   offset = 0,
@@ -72,7 +73,7 @@ function ValueNoise2D({
 
   // Retun bilinear interpolation.
   return multiply(
-    bilerp(c00, c10, c01, c11, filterFn(tx), filterFn(ty)),
+    outputFilterFn(bilerp(c00, c10, c01, c11, filterFn(tx), filterFn(ty))),
     amplitude
   );
 }

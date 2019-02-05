@@ -7,6 +7,7 @@ function run(fn, globals, done) {
     const floor = Math.floor;
     const cos = Math.cos;
     const pow = Math.pow;
+    const abs = Math.abs;
     const LCGMultiplier = ${LCGMultiplier};
     const LCGIncrement = ${LCGIncrement};
     const LCGModulus = ${LCGModulus};
@@ -18,13 +19,17 @@ function run(fn, globals, done) {
     ${fadeFilter};
     ${cosFilter};
     ${smoothStepFilter};
+    ${turbulenceOFilter};
+    ${vec};
     ${vectorize};
+    ${mapVec2};
     ${multiply};
     ${sum};
     ${lerp};
     ${bilerp};
     ${map};
     ${constrain};
+    ${id};
 
     // Globals
     let speed = ${speed};
@@ -52,6 +57,7 @@ function run(fn, globals, done) {
     const visualisationFn = ${getCurrentState().visualisationFn};
     const methodFn = ${getCurrentState().methodFn};
     const filterFn = ${getCurrentState().filterFn};
+    const outputFilterFn = ${getCurrentState().outputFilterFn};
 
     // Supplied Globals
     ${Object.keys(globals).map(name => `const ${name} = ${globals[name]};`).join('\n')}

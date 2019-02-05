@@ -5,6 +5,7 @@ const ValueNoise1DRandomsBySeed = {};
 function ValueNoise1D({
   getRandomFn = srand,
   filterFn = cosFilter,
+  outputFilterFn = id,
   frequency = 1,
   amplitude = 1,
   offset = 0,
@@ -42,7 +43,7 @@ function ValueNoise1D({
   const rightVertexValue = randoms[rightVertexIndex];
 
   return multiply(
-    lerp(leftVertexValue, rightVertexValue, filterFn(tx)),
+    outputFilterFn(lerp(leftVertexValue, rightVertexValue, filterFn(tx))),
     amplitude
   );
 }
