@@ -46,6 +46,7 @@ const visualisationFnsMap = {
   '2d-grayscale-image': draw2DGrayscaleImage,
   '2d-colorful-image': draw2DColorfulImage,
   '2d-marble-image': draw2DMarbleImage,
+  '2d-colorful-marble-image': draw2DColorfulMarbleImage,
 };
 
 const methodFnsMap = {
@@ -77,7 +78,8 @@ const visualisationDefaults = {
   '1d-colorful-triangle': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1},
   '2d-grayscale-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, disable: [playPauseButton, speedInput]},
   '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, disable: [playPauseButton, speedInput]},
-  '2d-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, disable: [playPauseButton, speedInput]}
+  '2d-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, disable: [playPauseButton, speedInput]},
+  '2d-colorful-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, disable: [playPauseButton, speedInput]}
 };
 
 function setDefaults(defaults) {
