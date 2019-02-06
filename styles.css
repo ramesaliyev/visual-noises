@@ -35,7 +35,7 @@ html, body {
 }
 
 .panel {
-  width: 200px;
+  width: 211px;
   position: absolute;
   top: 0;
   left: 0;
@@ -43,9 +43,25 @@ html, body {
   background: #111;
   box-sizing: border-box;
   padding: 20px;
+  padding-bottom: 60px;
   overflow-x: hidden;
   overflow-y: auto;
   border-right: 1px solid #333;
+}
+
+.panel-sticky {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 210px;
+  height: 41px;
+  padding: 10px 20px;
+  background: #111;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #333;
+  box-shadow: -10px -5px 18px 1px #000;
 }
 
 .page-title {
