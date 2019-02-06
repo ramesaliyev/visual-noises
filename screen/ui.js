@@ -210,11 +210,18 @@ onChange(visualisationSelect, val => {
   const dimension = visualisation.split('-')[0];
 
   if (dimension === '1d') {
+    if (stopped) {
+      draw(true);
+    }
+
     stopped = false;
-    draw(true);
   }
 
   if (dimension === '2d') {
+    if (stopped) {
+      draw();
+    }
+
     stopped = true;
   }
 
