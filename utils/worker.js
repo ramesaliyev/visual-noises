@@ -1,6 +1,8 @@
 function run(fn, globals, done) {
   const worker = new Worker(URL.createObjectURL(new Blob([`
     // Utils
+    const PI = Math.PI;
+    const TWO_PI = PI * 2;
     const max = Math.max;
     const min = Math.min;
     const ceil = Math.ceil;
