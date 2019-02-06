@@ -40,19 +40,25 @@ html, body {
   top: 0;
   left: 0;
   bottom: 0;
+  display: flex;
+  flex-direction: column;
   background: #111;
   box-sizing: border-box;
-  padding: 20px;
-  padding-bottom: 60px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   border-right: 1px solid #333;
 }
 
-.panel-sticky {
-  position: fixed;
-  left: 0px;
-  bottom: 0px;
+.panel-header {
+  padding: 20px 20px 10px 20px;
+}
+
+.panel-body {
+  flex: 1;
+  padding: 0 20px 20px 20px;
+  overflow: auto;
+}
+
+.panel-footer {
   width: 210px;
   height: 41px;
   padding: 10px 20px;
