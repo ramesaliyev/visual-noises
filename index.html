@@ -17,6 +17,17 @@
         <a class="github-button" href="https://github.com/ramesaliyev/visual-noises/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork ramesaliyev/visual-noises on GitHub">Fork</a>
       </div>
       <div class="input-wrapper">
+        <div class="input-name">Preset</div>
+        <div class="input-content">
+          <select id="presetSelect" class="input-element input-select">
+            <option value="none" selected>Custom</option>
+            <option value="dancing-mountains">Dancing Mountains</option>
+            <option value="rainy-clouds">Rainy Clouds</option>
+            <option value="dream-clouds">Dream Clouds</option>
+          </select>
+        </div>
+      </div>
+      <div class="input-wrapper">
         <div class="input-name">Visualisation</div>
         <div class="input-content">
           <select id="visualisationSelect" class="input-element input-select">
@@ -139,6 +150,7 @@
   </div>
 
   <!-- Utils -->
+  <script src="utils/misc.js"></script>
   <script src="utils/math.js"></script>
   <script src="utils/draw.js"></script>
   <script src="utils/worker.js"></script>

@@ -121,10 +121,3 @@ function map(currFrom, currTo, targetFrom, targetTo, n) {
 function constrain(low, high, n) {
   return max(min(n, high), low);
 }
-
-/**
- * Misc
- */
-function id(t) {
-  return t;
-}
