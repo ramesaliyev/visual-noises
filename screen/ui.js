@@ -88,28 +88,48 @@ const visualisationDefaults = {
   '2d-colorful-wood-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.008, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', disable: [playPauseButton, speedInput]}
 };
 
+Object.keys(visualisationDefaults).map(key => visualisationDefaults[key].visualisation = key);
+
 const presets = {
-  'dancing-mountains': {visualisation: '1d-line', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', defaults: {speed: 1, offset: 0, amplitude: 500, frequency: 0.0005, octave: 5, lacunarity: 3, gain:1}},
-  'rainy-clouds': {visualisation: '2d-grayscale-image', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', defaults: {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.002, octave: 5, lacunarity: 2, gain:0.5}},
-  'dream-clouds': {visualisation: '2d-colorful-image', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', defaults: {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.002, octave: 5, lacunarity: 2, gain:0.5}},
+  'dancing-mountains': {visualisation: '1d-line', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 1, offset: 0, amplitude: 500, frequency: 0.0005, octave: 5, lacunarity: 3, gain:1},
+  'rainy-clouds': {visualisation: '2d-grayscale-image', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 0, offset: 0, amplitude: 1.8, frequency: 0.002, octave: 5, lacunarity: 2, gain:0.5},
+  'dream-clouds': {visualisation: '2d-colorful-image', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 0, offset: 0, amplitude: 1.8, frequency: 0.002, octave: 5, lacunarity: 2, gain:0.5},
 }
+
+Object.keys(presets).map(key => presets[key].disable = visualisationDefaults[presets[key].visualisation].disable);
 
 function setOption(el, val) {
   el.selectedIndex = [...el.options].find(({value}) => value === val).index;
 }
 
-function setDefaults(defaults) {
-  speed = first(defaults.speed, speed);
-  offset = first(defaults.offset, offset)
-  frequency = first(defaults.frequency, frequency)
-  amplitude = first(defaults.amplitude, amplitude)
-  octave = first(defaults.octave, octave)
-  lacunarity = first(defaults.lacunarity, lacunarity)
-  gain = first(defaults.gain, gain)
-  visualisation = first(defaults.visualisation, visualisation);
-  method = first(defaults.method, method);
-  filter = first(defaults.filter, filter);
-  outputFilter = first(defaults.outputFilter, outputFilter)
+function applySettings(settings) {
+  method = first(settings.method, method);
+  filter = first(settings.filter, filter);
+  outputFilter = first(settings.outputFilter, outputFilter);
+  visualisation = first(settings.visualisation, visualisation);
+
+  if (applyDefaults) {
+    speed = first(settings.speed, speed);
+    offset = first(settings.offset, offset)
+    frequency = first(settings.frequency, frequency)
+    amplitude = first(settings.amplitude, amplitude)
+    octave = first(settings.octave, octave)
+    lacunarity = first(settings.lacunarity, lacunarity)
+    gain = first(settings.gain, gain)
+  }
+
+  elements.forEach(element => element.disabled = false);
+  const dimension = visualisation.split('-')[0];
+
+  if (dimension === '1d') {
+    if (stopped) draw(true);
+    stopped = false;
+  }
+
+  if (dimension === '2d') {
+    if (stopped) draw();
+    stopped = true;
+  }
 
   speedInput.value = speed;
   offsetInput.value = offset;
@@ -124,9 +144,11 @@ function setDefaults(defaults) {
   setOption(methodSelect, method);
   setOption(filterSelect, filter);
   setOption(outputFilterSelect, outputFilter);
+
+  (settings.disable || []).forEach(element => element.disabled = true);
 }
 
-setDefaults(visualisationDefaults['1d-line']);
+applySettings(visualisationDefaults['1d-line']);
 
 function getCurrentState() {
   const visualisationFn = visualisationFnsMap[visualisation];
@@ -175,65 +197,11 @@ function onChangeGetInt(element, fn) {
 }
 
 onChange(presetSelect, presetName => {
-  const preset = presets[presetName];
-  visualisation = first(preset.visualisation, visualisation);
-  method = first(preset.method, method);
-  filter = first(preset.filter, filter);
-  outputFilter = first(preset.outputFilter, outputFilter);
-
-  elements.forEach(element => element.disabled = false);
-
-  const dimension = visualisation.split('-')[0];
-
-  if (dimension === '1d') {
-    stopped = false;
-    draw(true);
-  }
-
-  if (dimension === '2d') {
-    stopped = true;
-  }
-
-  preset.defaults && setDefaults(preset.defaults);
-
-  const visDefaults = visualisationDefaults[visualisation];
-  if (visDefaults && visDefaults.disable) {
-    visDefaults.disable.forEach(element => element.disabled = true);
-  }
+  applySettings(presets[presetName]);
 });
 
 onChange(visualisationSelect, val => {
-  visualisation = val;
-
-  elements.forEach(element => element.disabled = false);
-
-  const dimension = visualisation.split('-')[0];
-
-  if (dimension === '1d') {
-    if (stopped) {
-      draw(true);
-    }
-
-    stopped = false;
-  }
-
-  if (dimension === '2d') {
-    if (stopped) {
-      draw();
-    }
-
-    stopped = true;
-  }
-
-  const defaults = visualisationDefaults[val];
-
-  if (defaults && applyDefaults) {
-    setDefaults(defaults);
-  }
-
-  if (defaults && defaults.disable) {
-    defaults.disable.forEach(element => element.disabled = true);
-  }
+  applySettings(visualisationDefaults[val]);
 });
 
 onChange(methodSelect, val => method = val);
