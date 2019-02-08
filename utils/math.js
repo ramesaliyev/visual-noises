@@ -64,7 +64,7 @@ function smoothStepFilter(t) {
  * Output filter methods.
  */
 function turbulenceOFilter(x) {
-  return vec(x, t => abs((2 * t) - 1));
+  return mapVec(x, t => abs((2 * t) - 1));
 }
 
 /**
@@ -78,8 +78,7 @@ function vectorize(a, b) {
 }
 
 function mapVec(a, fn) {
-  a = typeof a === 'number' ? [a] : a;
-  return a.map(fn);
+  return Array.isArray(a) ? a.map(fn) : fn(a);
 }
 
 function mapVec2(a, b, fn) {
