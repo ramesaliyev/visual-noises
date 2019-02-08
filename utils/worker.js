@@ -46,12 +46,6 @@ function run(fn, globals, done) {
     let lacunarity = ${lacunarity};
     let gain = ${gain};
 
-    // Value Noise 1D
-    const VALUE_NOISE_1D_DEFAULT_MAX_VERTICES = ${VALUE_NOISE_1D_DEFAULT_MAX_VERTICES};
-    const VALUE_NOISE_1D_DEFAULT_MAX_VERTICES_MASK = ${VALUE_NOISE_1D_DEFAULT_MAX_VERTICES_MASK};
-    const ValueNoise1DRandomsBySeed = ${JSON.stringify(ValueNoise1DRandomsBySeed)};
-    ${ValueNoise1D};
-
     // Value Noise 2D
     const VALUE_NOISE_2D_DEFAULT_MAX_VERTICES = ${VALUE_NOISE_2D_DEFAULT_MAX_VERTICES};
     const VALUE_NOISE_2D_DEFAULT_MAX_VERTICES_MASK = ${VALUE_NOISE_2D_DEFAULT_MAX_VERTICES_MASK};

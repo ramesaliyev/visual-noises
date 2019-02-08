@@ -4,7 +4,7 @@ let mouseX;
 let mouseY;
 
 let visualisation = '1d-line';
-let method = 'value-noise-1d';
+let method = 'value-noise-2d';
 let filter = 'smoothstep';
 let outputFilter = 'none';
 

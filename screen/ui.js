@@ -55,7 +55,6 @@ const visualisationFnsMap = {
 
 const methodFnsMap = {
   'white-noise': WhiteNoise,
-  'value-noise-1d': ValueNoise1D,
   'value-noise-2d': ValueNoise2D,
   'perlin-noise-2d': PerlinNoise2D,
 };
@@ -73,14 +72,14 @@ const outputFilterFnsMap = {
 };
 
 const visualisationDefaults = {
-  '1d-line': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-1d'},
-  '1d-colorful-line': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-1d'},
-  '1d-color-gradient': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-1d'},
-  '1d-rgb-lines': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-1d'},
-  '1d-ball': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-1d'},
-  '1d-colorful-ball': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-1d'},
-  '1d-radius-ball': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-1d'},
-  '1d-colorful-triangle': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-1d'},
+  '1d-line': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
+  '1d-colorful-line': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
+  '1d-color-gradient': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
+  '1d-rgb-lines': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
+  '1d-ball': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
+  '1d-colorful-ball': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
+  '1d-radius-ball': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
+  '1d-colorful-triangle': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
   '2d-grayscale-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput]},
   '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput]},
   '2d-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput]},
