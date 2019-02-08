@@ -28,11 +28,14 @@ function run(fn, globals, done) {
     ${mapVec2};
     ${multiply};
     ${sum};
+    ${dotProd}
     ${lerp};
     ${bilerp};
     ${map};
     ${constrain};
     ${id};
+    ${first};
+    ${flat};
 
     // Globals
     let speed = ${speed};
@@ -55,6 +58,15 @@ function run(fn, globals, done) {
     const ValueNoise2DPermutationTable = ${JSON.stringify(ValueNoise2DPermutationTable)};
     const ValueNoise2DRandomsBySeed = ${JSON.stringify(ValueNoise2DRandomsBySeed)};
     ${ValueNoise2D};
+
+    // Perlin Noise 2D
+    const PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES = ${PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES};
+    const PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK = ${PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK};
+    const PERLIN_NOISE_2D_GRAD_DIRECTIONS = ${JSON.stringify(PERLIN_NOISE_2D_GRAD_DIRECTIONS)};
+    let PerlinNoise2DPermutationTable = ${JSON.stringify(PerlinNoise2DPermutationTable)};
+    let PerlinNoise2DGradientTable = ${JSON.stringify(PerlinNoise2DGradientTable)};
+    ${generatePerlinNoise2DTables}
+    ${PerlinNoise2D};
 
     // State
     const visualisationFn = ${getCurrentState().visualisationFn};

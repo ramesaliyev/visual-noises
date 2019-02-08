@@ -9,3 +9,7 @@ function first(...args) {
     }
   }
 }
+
+function flat(arr) {
+  return arr.flat ? arr.flat() : arr.reduce((a, b) => a.concat(b), []);
+}

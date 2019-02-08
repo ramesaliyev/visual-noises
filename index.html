@@ -49,12 +49,13 @@
             </div>
           </div>
           <div class="input-wrapper">
-            <div class="input-name">Method</div>
+            <div class="input-name">Noise Algorithm</div>
             <div class="input-content">
               <select id="methodSelect" class="input-element input-select">
-                <option value="white-noise">White Noise</option>
-                <option value="value-noise-1d" selected>Value Noise 1D</option>
-                <option value="value-noise-2d">Value Noise 2D</option>
+                <option value="white-noise">White</option>
+                <option value="value-noise-1d" selected>Value 1D</option>
+                <option value="value-noise-2d">Value 2D</option>
+                <option value="perlin-noise-2d">Perlin 2D</option>
               </select>
             </div>
           </div>
@@ -162,9 +163,10 @@
   <script src="utils/worker.js"></script>
 
   <!-- Procedural Generation Methods -->
+  <script src="methods/white-noise.js"></script>
   <script src="methods/value-noise-1d.js"></script>
   <script src="methods/value-noise-2d.js"></script>
-  <script src="methods/white-noise.js"></script>
+  <script src="methods/perlin-noise-2d.js"></script>
 
   <!-- Procedural Generation Visualisations -->
   <script src="visualisations/1d-line.js"></script>

@@ -5,6 +5,7 @@ const max = Math.max;
 const min = Math.min;
 const ceil = Math.ceil;
 const floor = Math.floor;
+const round = Math.round;
 const cos = Math.cos;
 const pow = Math.pow;
 const abs = Math.abs;
@@ -38,6 +39,10 @@ function srand() {
 
 function srandRange(min, max) {
   return srand() * (max - min) + min;
+}
+
+function srandRangeInt(min, max) {
+  return round(srandRange(min,max));
 }
 
 /**
@@ -90,6 +95,12 @@ function sum(a, b) {
   return mapVec2(a, b, (x, y) => x + y);
 }
 
+function dotProd(a, b) {
+  [a2, b2] = a.map((v, i) => multiply(v, b[i]));
+  const product = a2.map((v, i) => sum(v, b2[i]));
+  return flat(product);
+}
+
 /**
  * Interpolation
  */
@@ -112,6 +123,10 @@ function bilerp(c00, c10, c01, c11, tx, ty) {
  * Map number n which between the range a..b to another range x..y
  */
 function map(currFrom, currTo, targetFrom, targetTo, n) {
+  if (Array.isArray(n)) {
+    return n.map(v => map(currFrom, currTo, targetFrom, targetTo, v));
+  }
+
   return ((n - currFrom) / (currTo - currFrom) * (targetTo - targetFrom)) + targetFrom;
 }
 
