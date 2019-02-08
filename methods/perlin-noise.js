@@ -31,23 +31,6 @@ PerlinNoise2DPermutationTable = [
   ...PerlinNoise2DPermutationTable
 ];
 
-// function generatePerlinNoise2DTables() {
-//   PerlinNoise2DGradientTable = [...PerlinNoise2DGradientBase];
-
-//   const pTable = PerlinNoise2DPermutationTable;
-//   const gTable = PerlinNoise2DGradientTable;
-
-//   for (let i = 0; i < PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES ; i++) {
-//     const randomIndex = srandInt() & PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK;
-//     [gTable[pTable[randomIndex]], gTable[pTable[i]]] = [gTable[pTable[i]], gTable[pTable[randomIndex]]];
-//   }
-
-//   PerlinNoise2DGradientTable = [
-//     ...PerlinNoise2DGradientTable,
-//     ...PerlinNoise2DGradientTable
-//   ];
-// }
-
 function PerlinNoise2D({
   getRandomFn = srand,
   filterFn = cosFilter,

@@ -1,7 +1,6 @@
 function run(fn, globals, done) {
   const now = performance.now();
   const worker = new Worker(URL.createObjectURL(new Blob([`
-    console.log(Date.now());
     // Utils
     const PI = Math.PI;
     const TWO_PI = PI * 2;
