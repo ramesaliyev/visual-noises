@@ -2,8 +2,14 @@ const PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES = 256;
 const PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK = PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES - 1;
 const PERLIN_NOISE_2D_GRAD_DIRECTIONS = [[1, 1], [-1, 1], [1, -1], [-1, -1], [1, 0], [-1, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [0, 1], [0, -1]];
 
+const PerlinNoise2DGradientBase =
+  new Array(PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES)
+    .fill(PERLIN_NOISE_2D_GRAD_DIRECTIONS)
+    .flat()
+    .slice(0, PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES);
+
+const PerlinNoise2DGradientsBySeed = {};
 let PerlinNoise2DPermutationTable = [];
-let PerlinNoise2DGradientTable = [];
 
 PerlinNoise2DPermutationTable = [
   151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,
@@ -25,24 +31,22 @@ PerlinNoise2DPermutationTable = [
   ...PerlinNoise2DPermutationTable
 ];
 
-function generatePerlinNoise2DTables() {
-  PerlinNoise2DGradientTable = (new Array(PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES))
-    .fill(PERLIN_NOISE_2D_GRAD_DIRECTIONS)
-    .flat().slice(0, PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES);
+// function generatePerlinNoise2DTables() {
+//   PerlinNoise2DGradientTable = [...PerlinNoise2DGradientBase];
 
-  const pTable = PerlinNoise2DPermutationTable;
-  const gTable = PerlinNoise2DGradientTable;
+//   const pTable = PerlinNoise2DPermutationTable;
+//   const gTable = PerlinNoise2DGradientTable;
 
-  for (let i = 0; i < PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES ; i++) {
-    const randomIndex = srandInt() & PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK;
-    [gTable[pTable[randomIndex]], gTable[pTable[i]]] = [gTable[pTable[i]], gTable[pTable[randomIndex]]];
-  }
+//   for (let i = 0; i < PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES ; i++) {
+//     const randomIndex = srandInt() & PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK;
+//     [gTable[pTable[randomIndex]], gTable[pTable[i]]] = [gTable[pTable[i]], gTable[pTable[randomIndex]]];
+//   }
 
-  PerlinNoise2DGradientTable = [
-    ...PerlinNoise2DGradientTable,
-    ...PerlinNoise2DGradientTable
-  ];
-}
+//   PerlinNoise2DGradientTable = [
+//     ...PerlinNoise2DGradientTable,
+//     ...PerlinNoise2DGradientTable
+//   ];
+// }
 
 function PerlinNoise2D({
   getRandomFn = srand,
@@ -55,17 +59,30 @@ function PerlinNoise2D({
   x: valueX, // required value
   y: valueY, // required value
 }) {
+  const maxVertices = PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES;
   const maxVerticesMask = PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK;
+  const pTable = PerlinNoise2DPermutationTable;
 
   if (seed) {
     setRandomSeed(seed);
-    generatePerlinNoise2DTables();
-  } else if (!PerlinNoise2DGradientTable.length) {
-    generatePerlinNoise2DTables();
   }
 
-  const pTable = PerlinNoise2DPermutationTable;
-  const gTable = PerlinNoise2DGradientTable;
+  let gTable = PerlinNoise2DGradientsBySeed[seed];
+
+  if (!gTable) {
+    const randoms = new Array(maxVertices).fill(0).map(getRandomFn);
+    const table = randoms.map(randVec => {
+      return mapVec(randVec, val => {
+        val = floor(map(0, 1, 0, maxVerticesMask, val));
+        return PerlinNoise2DGradientBase[pTable[val]];
+      });
+    });
+
+    PerlinNoise2DGradientsBySeed[seed] = gTable = [
+      ...table,
+      ...table
+    ];
+  }
 
   // Floor
   const x = (valueX + offset) * frequency;
@@ -87,10 +104,10 @@ function PerlinNoise2D({
   const g01 = gTable[pTable[pTable[leftVertexIndex] + topVertexIndex] & maxVerticesMask];
   const g11 = gTable[pTable[pTable[rightVertexIndex] + topVertexIndex] & maxVerticesMask];
 
-  const c00 = dotProd(g00, [tx, ty]);
-  const c10 = dotProd(g10, [tx-1, ty]);
-  const c01 = dotProd(g01, [tx, ty-1]);
-  const c11 = dotProd(g11, [tx-1, ty-1]);
+  const c00 = mapVec(g00, val => dotProd(val, [tx, ty]));
+  const c10 = mapVec(g10, val => dotProd(val, [tx-1, ty]));
+  const c01 = mapVec(g01, val => dotProd(val, [tx, ty-1]));
+  const c11 = mapVec(g11, val => dotProd(val, [tx-1, ty-1]));
 
   // Retun bilinear interpolation.
   return multiply(

@@ -70,16 +70,16 @@ function turbulenceOFilter(x) {
 /**
  * Vectors
  */
-function vec(a, fn) {
-  a = typeof a === 'number' ? [a] : a;
-  return a.map(fn);
-}
-
 function vectorize(a, b) {
   a = typeof a === 'number' ? [a] : a;
   b = typeof b === 'number' ? new Array(a.length).fill(b) : b;
 
   return [a, b];
+}
+
+function mapVec(a, fn) {
+  a = typeof a === 'number' ? [a] : a;
+  return a.map(fn);
 }
 
 function mapVec2(a, b, fn) {

@@ -30,6 +30,8 @@ function draw2DColorfulImage({
   run(calculate, {getValueFn, height, width, offsetX, offsetY}, result => {
     context.clearRect(0, 0, screenWidth, screenHeight);
 
+    console.log(result);
+
     let maxValue = 0;
 
     result.forEach(({value}) => {

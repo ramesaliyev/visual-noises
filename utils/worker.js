@@ -23,8 +23,8 @@ function run(fn, globals, done) {
     ${cosFilter};
     ${smoothStepFilter};
     ${turbulenceOFilter};
-    ${vec};
     ${vectorize};
+    ${mapVec};
     ${mapVec2};
     ${multiply};
     ${sum};
@@ -58,8 +58,8 @@ function run(fn, globals, done) {
     const PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK = ${PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK};
     const PERLIN_NOISE_2D_GRAD_DIRECTIONS = ${JSON.stringify(PERLIN_NOISE_2D_GRAD_DIRECTIONS)};
     let PerlinNoise2DPermutationTable = ${JSON.stringify(PerlinNoise2DPermutationTable)};
-    let PerlinNoise2DGradientTable = ${JSON.stringify(PerlinNoise2DGradientTable)};
-    ${generatePerlinNoise2DTables}
+    let PerlinNoise2DGradientBase = ${JSON.stringify(PerlinNoise2DGradientBase)};
+    let PerlinNoise2DGradientsBySeed = ${JSON.stringify(PerlinNoise2DGradientsBySeed)};
     ${PerlinNoise2D};
 
     // State
