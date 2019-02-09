@@ -5,11 +5,9 @@ function draw1DColorfulTriangle({
   width,
   height
 }) {
-  const value = getValueFn(0);
-
-  const a = value[0] / amplitude;
-  const b = value[1] / amplitude;
-  const c = value[2] / amplitude;
+  const a = getValueFn(offsetX + 2/frequency) / amplitude;
+  const b = getValueFn(offsetX + 64/frequency) / amplitude;
+  const c = getValueFn(offsetX + 128/frequency) / amplitude;
 
   const x1 = offsetX + map(0, 1, 0, width, a);
   const y1 = offsetY + map(0, 1, 0, height, b);
@@ -19,7 +17,6 @@ function draw1DColorfulTriangle({
 
   const x3 = offsetX + map(0, 1, 0, width, c);
   const y3 = offsetY + map(0, 1, 0, height, a);
-
 
   // the triangle
   context.beginPath();

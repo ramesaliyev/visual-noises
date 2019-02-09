@@ -12,17 +12,40 @@ function draw2DColorfulMarbleImage({
 
   const calculate = () => {
     const result = [];
+    const xPosBase = offsetX + 100;
+    const yPosBase = offsetY + height + 100;
+
+    let maxValue = -Infinity;
+    let minValue = Infinity;
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        const value = multiply(getValueFn(x, y), octave);
+        const r = map(0, amplitude, 0, 255, getValueFn(x + 2/frequency, y + 2/frequency));
+        const g = map(0, amplitude, 0, 255, getValueFn(x + 64/frequency, y + 64/frequency));
+        const b = map(0, amplitude, 0, 255, getValueFn(x + 128/frequency, y + 128/frequency));
 
-        const xPos = offsetX + x + 100;
-        const yPos = offsetY + height + 100 - y;
+        maxValue = max(maxValue, r, g, b);
+        minValue = min(minValue, r, g, b);
 
-        result.push({xPos, yPos, value, x});
+        result.push([xPosBase + x, yPosBase - y, x, r, g, b]);
       }
     }
+
+    result.forEach(rs => {
+      const [,,x,rV,gV,bV] = rs;
+
+      const rI = map(minValue, maxValue, 0, 1, rV);
+      const gI = map(minValue, maxValue, 0, 1, gV);
+      const bI = map(minValue, maxValue, 0, 1, bV);
+
+      const r = (sin((x + rI * 100) * 2 * PI / 200) + 1) / 2;
+      const g = (sin((x + gI * 100) * 2 * PI / 200) + 1) / 2;
+      const b = (sin((x + bI * 100) * 2 * PI / 200) + 1) / 2;
+
+      rs[3] = map(0, 1, 0, 255, r);
+      rs[4] = map(0, 1, 0, 255, g);
+      rs[5] = map(0, 1, 0, 255, b);
+    });
 
     return result;
   }
@@ -30,25 +53,7 @@ function draw2DColorfulMarbleImage({
   run(calculate, {getValueFn, height, width, offsetX, offsetY}, result => {
     context.clearRect(0, 0, screenWidth, screenHeight);
 
-    let maxValue = 0;
-
-    result.forEach(({value}) => {
-      maxValue = Math.max(maxValue, Math.max(...value));
-    });
-
-    result.forEach(({xPos, yPos, value, x}) => {
-      const rI = map(0, maxValue, 0, 1, value[0]);
-      const gI = map(0, maxValue, 0, 1, value[1]);
-      const bI = map(0, maxValue, 0, 1, value[2]);
-
-      const valR = (sin((x + rI * 100) * 2 * PI / 200) + 1) / 2;
-      const valG = (sin((x + gI * 100) * 2 * PI / 200) + 1) / 2;
-      const valB = (sin((x + bI * 100) * 2 * PI / 200) + 1) / 2;
-
-      const r = map(0, 1, 0, 255, valR);
-      const g = map(0, 1, 0, 255, valG);
-      const b = map(0, 1, 0, 255, valB);
-
+    result.forEach(([xPos, yPos, , r, g, b]) => {
       context.fillStyle = `rgb(${r}, ${g}, ${b})`;
       context.fillRect(xPos, yPos, 1, 1);
     });

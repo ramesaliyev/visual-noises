@@ -9,7 +9,7 @@ function draw1DRadiusBall({
   context.clearRect(offsetX, height-1, offsetX + width, 3);
   dashedLine(offsetX, height, offsetX + width, height, {color:'#333'});
 
-  const y = getValueFn(0)[0] / amplitude;
+  const y = getValueFn(0) / amplitude;
 
   const maxRadius = 200;
   const radius = y * maxRadius;

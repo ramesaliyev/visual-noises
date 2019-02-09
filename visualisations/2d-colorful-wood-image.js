@@ -12,17 +12,34 @@ function draw2DColorfulWoodImage({
 
   const calculate = () => {
     const result = [];
+    const xPosBase = offsetX + 100;
+    const yPosBase = offsetY + height + 100;
+
+    let maxValue = -Infinity;
+    let minValue = Infinity;
 
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        const value = multiply(getValueFn(x, y), octave);
+        const r = map(0, amplitude, 0, 255, getValueFn(x + 2/frequency, y + 2/frequency));
+        const g = map(0, amplitude, 0, 255, getValueFn(x + 64/frequency, y + 64/frequency));
+        const b = map(0, amplitude, 0, 255, getValueFn(x + 128/frequency, y + 128/frequency));
 
-        const xPos = offsetX + x + 100;
-        const yPos = offsetY + height + 100 - y;
+        maxValue = max(maxValue, r, g, b);
+        minValue = min(minValue, r, g, b);
 
-        result.push({xPos, yPos, value});
+        result.push([xPosBase + x, yPosBase - y, r, g, b]);
       }
     }
+
+    result.forEach(r => {
+      const gR = map(minValue, maxValue, 0, 1, r[2]) * 10;
+      const gG = map(minValue, maxValue, 0, 1, r[3]) * 10;
+      const gB = map(minValue, maxValue, 0, 1, r[4]) * 10;
+
+      r[2] = map(0, 1, 0, 255, gR - floor(gR));
+      r[3] = map(0, 1, 0, 255, gG - floor(gG));
+      r[4] = map(0, 1, 0, 255, gB - floor(gB));
+    });
 
     return result;
   }
@@ -30,25 +47,7 @@ function draw2DColorfulWoodImage({
   run(calculate, {getValueFn, height, width, offsetX, offsetY}, result => {
     context.clearRect(0, 0, screenWidth, screenHeight);
 
-    let maxValue = 0;
-
-    result.forEach(({value}) => {
-      maxValue = Math.max(maxValue, Math.max(...value));
-    });
-
-    result.forEach(({xPos, yPos, value}) => {
-      const gR = map(0, maxValue, 0, 1, value[0]) * 10;
-      const gG = map(0, maxValue, 0, 1, value[1]) * 10;
-      const gB = map(0, maxValue, 0, 1, value[2]) * 10;
-
-      const valR = gR - floor(gR);
-      const valG = gG - floor(gG);
-      const valB = gB - floor(gB);
-
-      const r = map(0, 1, 0, 255, valR);
-      const g = map(0, 1, 0, 255, valG);
-      const b = map(0, 1, 0, 255, valB);
-
+    result.forEach(([xPos, yPos, r, g, b]) => {
       context.fillStyle = `rgb(${r}, ${g}, ${b})`;
       context.fillRect(xPos, yPos, 1, 1);
     });

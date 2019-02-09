@@ -14,7 +14,10 @@ const drawButton = document.getElementById('drawButton');
 const playPauseButton = document.getElementById('playPauseButton');
 const resetOffsetButton = document.getElementById('resetOffsetButton');
 const seedInput = document.getElementById('seedInput');
-const tailInput = document.getElementById('tailInput');
+
+const leaveTailInput = document.getElementById('leaveTailInput');
+const applyDefaultsInput = document.getElementById('applyDefaultsInput');
+const syncOffsetsInput = document.getElementById('syncOffsetsInput');
 
 const elements = [
   presetSelect,
@@ -33,7 +36,9 @@ const elements = [
   playPauseButton,
   resetOffsetButton,
   seedInput,
-  tailInput,
+  leaveTailInput,
+  applyDefaultsInput,
+  syncOffsetsInput
 ];
 
 const visualisationFnsMap = {
@@ -72,26 +77,26 @@ const outputFilterFnsMap = {
 };
 
 const visualisationDefaults = {
-  '1d-line': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
-  '1d-colorful-line': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
-  '1d-color-gradient': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
-  '1d-rgb-lines': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
-  '1d-ball': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
-  '1d-colorful-ball': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
-  '1d-radius-ball': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
-  '1d-colorful-triangle': {speed: 30, offset: 0, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d'},
-  '2d-grayscale-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput]},
-  '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput]},
-  '2d-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput]},
-  '2d-colorful-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput]},
-  '2d-wood-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.008, octave: 1, lacunarity: 1, gain:1, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput]},
-  '2d-colorful-wood-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.008, octave: 1, lacunarity: 1, gain:1, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput]}
+  '1d-line': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
+  '1d-colorful-line': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
+  '1d-color-gradient': {speed: 30, amplitude: 500, frequency: 0.0003, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
+  '1d-rgb-lines': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
+  '1d-ball': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
+  '1d-colorful-ball': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
+  '1d-radius-ball': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
+  '1d-colorful-triangle': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
+  '2d-grayscale-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true},
+  '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true},
+  '2d-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true},
+  '2d-colorful-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true},
+  '2d-wood-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.008, octave: 1, lacunarity: 1, gain:1, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true},
+  '2d-colorful-wood-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.008, octave: 1, lacunarity: 1, gain:1, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true}
 };
 
 Object.keys(visualisationDefaults).map(key => visualisationDefaults[key].visualisation = key);
 
 const presets = {
-  'dancing-mountains': {visualisation: '1d-line', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 1, offset: 0, amplitude: 500, frequency: 0.0005, octave: 5, lacunarity: 3, gain:1},
+  'dancing-mountains': {visualisation: '1d-line', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 1, amplitude: 500, frequency: 0.0005, octave: 5, lacunarity: 3, gain:1, syncOffsetsXY:true},
   'rainy-clouds': {visualisation: '2d-grayscale-image', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 0, offset: 0, amplitude: 1.8, frequency: 0.002, octave: 5, lacunarity: 2, gain:0.5},
   'dream-clouds': {visualisation: '2d-colorful-image', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 0, offset: 0, amplitude: 1.8, frequency: 0.002, octave: 5, lacunarity: 2, gain:0.5},
 }
@@ -107,6 +112,7 @@ function applySettings(settings) {
   filter = first(settings.filter, filter);
   outputFilter = first(settings.outputFilter, outputFilter);
   visualisation = first(settings.visualisation, visualisation);
+  syncOffsetsXY = first(settings.syncOffsetsXY, syncOffsetsXY);
 
   if (applyDefaults) {
     speed = first(settings.speed, speed);
@@ -122,12 +128,18 @@ function applySettings(settings) {
   const dimension = visualisation.split('-')[0];
 
   if (dimension === '1d') {
-    if (stopped) draw(true);
+    if (stopped) {
+      stopped = false;
+      draw(true);
+    }
     stopped = false;
   }
 
   if (dimension === '2d') {
-    if (stopped) draw();
+    if (stopped) {
+      stopped = true;
+      draw();
+    }
     stopped = true;
   }
 
@@ -139,6 +151,7 @@ function applySettings(settings) {
   lacunarityInput.value = lacunarity;
   gainInput.value = gain;
   seedInput.value = seed;
+  syncOffsetsInput.checked = syncOffsetsXY;
 
   setOption(visualisationSelect, visualisation);
   setOption(methodSelect, method);
@@ -222,8 +235,9 @@ onChangeGetInt(seedInput, val => {
   offset = 0;
 });
 
-onCheck(tailInput, val => leaveTail = val);
+onCheck(leaveTailInput, val => leaveTail = val);
 onCheck(applyDefaultsInput, val => applyDefaults = val);
+onCheck(syncOffsetsInput, val => syncOffsetsXY = val);
 
 on(drawButton, 'click', () => draw(false));
 on(playPauseButton, 'click', () => {

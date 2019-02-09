@@ -10,7 +10,7 @@ function draw1DLine({
   dashedLine(offsetX, height, offsetX + width, height, {color:'#333'});
 
   for (let x = 0; x < width; x++) {
-    const y = getValueFn(x)[0];
+    const y = getValueFn(x);
 
     const xPos = offsetX + x;
     const yPos = offsetY + height - y;

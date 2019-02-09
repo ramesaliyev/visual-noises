@@ -8,6 +8,7 @@ function run(fn, globals, done) {
     const min = Math.min;
     const ceil = Math.ceil;
     const floor = Math.floor;
+    const round = Math.round;
     const cos = Math.cos;
     const pow = Math.pow;
     const abs = Math.abs;
@@ -24,12 +25,6 @@ function run(fn, globals, done) {
     ${cosFilter};
     ${smoothStepFilter};
     ${turbulenceOFilter};
-    ${vectorize};
-    ${mapVec};
-    ${mapVec2};
-    ${multiply};
-    ${sum};
-    ${dotProd}
     ${lerp};
     ${bilerp};
     ${map};
@@ -57,10 +52,8 @@ function run(fn, globals, done) {
     // Perlin Noise 2D
     const PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES = ${PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES};
     const PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK = ${PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK};
-    const PERLIN_NOISE_2D_GRAD_DIRECTIONS = ${JSON.stringify(PERLIN_NOISE_2D_GRAD_DIRECTIONS)};
     let PerlinNoise2DPermutationTable = ${JSON.stringify(PerlinNoise2DPermutationTable)};
-    let PerlinNoise2DGradientBase = ${JSON.stringify(PerlinNoise2DGradientBase)};
-    let PerlinNoise2DGradientsBySeed = ${JSON.stringify(PerlinNoise2DGradientsBySeed)};
+    ${Perlin2DGradientDotProd};
     ${PerlinNoise2D};
 
     // State
@@ -75,11 +68,11 @@ function run(fn, globals, done) {
     // Run fn.
     postMessage((${fn})());
   `])));
+  console.log(`Worker prepared, took ${performance.now() - now}ms.`);
 
   worker.onmessage = ({data}) => {
     console.log(`Worker job completed, took ${performance.now() - now}ms.`);
+    worker.terminate();
     done(data);
   };
-
-  return worker;
 }

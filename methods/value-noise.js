@@ -27,10 +27,11 @@ function ValueNoise2D({
   outputFilterFn = id,
   frequency = 1,
   amplitude = 1,
-  offset = 0,
+  xOffset = 0,
+  yOffset = 0,
   seed,
-  x: valueX, // required value
-  y: valueY, // required value
+  x: valueX = 0, // required value
+  y: valueY = 0, // required value
 }) {
   const maxVertices = VALUE_NOISE_2D_DEFAULT_MAX_VERTICES;
   const maxVerticesMask = VALUE_NOISE_2D_DEFAULT_MAX_VERTICES_MASK;
@@ -52,8 +53,8 @@ function ValueNoise2D({
   }
 
   // Floor
-  const x = (valueX + offset) * frequency;
-  const y = (valueY + offset) * frequency;
+  const x = (valueX + xOffset) * frequency;
+  const y = (valueY + yOffset) * frequency;
   const xInt = floor(x);
   const yInt = floor(y);
   const tx = x - xInt;
@@ -72,8 +73,5 @@ function ValueNoise2D({
   const c11 = randoms[permutationTable[permutationTable[rightVertexIndex] + topVertexIndex]];
 
   // Retun bilinear interpolation.
-  return multiply(
-    outputFilterFn(bilerp(c00, c10, c01, c11, filterFn(tx), filterFn(ty))),
-    amplitude
-  );
+  return outputFilterFn(bilerp(c00, c10, c01, c11, filterFn(tx), filterFn(ty))) * amplitude;
 }

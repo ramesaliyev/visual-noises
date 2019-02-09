@@ -7,5 +7,5 @@ function WhiteNoise({
     setRandomSeed(seed);
   }
 
-  return multiply(getRandomFn(), amplitude);
+  return getRandomFn() * amplitude;
 }

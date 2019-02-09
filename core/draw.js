@@ -16,27 +16,35 @@ function draw(schedule) {
   } = getCurrentState();
 
   visualisationFn({
-    getValueFn: ((x, y=0) => {
-      let noiseSum = [0, 0, 0];
+    getValueFn: ((x, y) => {
+      let noiseSum = 0;
       let _amplitude = amplitude;
       let _frequency = frequency;
 
+      let xOffset = yOffset = offset;
+
+      if (typeof y === 'undefined' && !syncOffsetsXY) {
+        yOffset = 0;
+      }
+
       for (let i = 0; i < octave; i++) {
-        let output = methodFn({
-          x, y, offset,
-          filterFn, outputFilterFn,
+        noiseSum += methodFn({
+          x,
+          y,
+          xOffset,
+          yOffset,
+          filterFn,
+          outputFilterFn,
           amplitude:_amplitude,
           frequency:_frequency,
-          getRandomFn: () => [srand(), srand(), srand()]
+          getRandomFn: srand
         });
-
-        noiseSum = sum(noiseSum, output);
 
         _frequency *= lacunarity;
         _amplitude *= gain;
       }
 
-      return multiply(noiseSum, 1/octave);
+      return noiseSum / octave;
     }),
     seed,
     offsetX: 200,

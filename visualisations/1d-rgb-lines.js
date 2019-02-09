@@ -9,14 +9,12 @@ function draw1DRGBLines({
   dashedLine(offsetX, height, offsetX + width, height, {color:'#333'});
 
   for (let x = 0; x < width; x++) {
-    const values = getValueFn(x);
-
     const xPos = offsetX + x;
     const yPosBase = offsetY + height;
 
-    const rY = values[0];
-    const gY = values[1];
-    const bY = values[2];
+    const rY = getValueFn(x + 2/frequency);
+    const gY = getValueFn(x + 64/frequency);
+    const bY = getValueFn(x + 128/frequency);
 
     const r = map(0, amplitude, 0, 255, rY);
     const g = map(0, amplitude, 0, 255, gY);

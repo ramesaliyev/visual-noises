@@ -63,51 +63,15 @@ function smoothStepFilter(t) {
 /**
  * Output filter methods.
  */
-function turbulenceOFilter(x) {
-  return mapVec(x, t => abs((2 * t) - 1));
-}
-
-/**
- * Vectors
- */
-function vectorize(a, b) {
-  a = typeof a === 'number' ? [a] : a;
-  b = typeof b === 'number' ? new Array(a.length).fill(b) : b;
-
-  return [a, b];
-}
-
-function mapVec(a, fn) {
-  return Array.isArray(a) ? a.map(fn) : fn(a);
-}
-
-function mapVec2(a, b, fn) {
-  [a, b] = vectorize(a, b);
-  return a.map((v, i) => fn(v, b[i]));
-}
-
-function multiply(a, b) {
-  return mapVec2(a, b, (x, y) => x * y);
-}
-
-function sum(a, b) {
-  return mapVec2(a, b, (x, y) => x + y);
-}
-
-function dotProd(a, b) {
-  [a2, b2] = a.map((v, i) => multiply(v, b[i]));
-  const product = a2.map((v, i) => sum(v, b2[i]));
-  return flat(product);
+function turbulenceOFilter(t) {
+  return abs((2 * t) - 1);
 }
 
 /**
  * Interpolation
  */
 function lerp(a, b, t) {
-  return sum(
-    multiply(a, (1 - t)),
-    multiply(b, t)
-  );
+  return a*(1-t) + b*t;
 }
 
 function bilerp(c00, c10, c01, c11, tx, ty) {
@@ -122,10 +86,6 @@ function bilerp(c00, c10, c01, c11, tx, ty) {
  * Map number n which between the range a..b to another range x..y
  */
 function map(currFrom, currTo, targetFrom, targetTo, n) {
-  if (Array.isArray(n)) {
-    return n.map(v => map(currFrom, currTo, targetFrom, targetTo, v));
-  }
-
   return ((n - currFrom) / (currTo - currFrom) * (targetTo - targetFrom)) + targetFrom;
 }
 

@@ -14,9 +14,10 @@ let stopped = false;
 let paused = false;
 let leaveTail = false;
 let applyDefaults = true;
+let syncOffsetsXY = false;
 
 let speed;
-let offset;
+let offset = 0;
 let amplitude;
 let frequency;
 

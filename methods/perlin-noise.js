@@ -1,17 +1,28 @@
 const PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES = 256;
 const PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK = PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES - 1;
-const PERLIN_NOISE_2D_GRAD_DIRECTIONS = [[1, 1], [-1, 1], [1, -1], [-1, -1], [1, 0], [-1, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [0, 1], [0, -1]];
 
-const PerlinNoise2DGradientBase =
-  new Array(PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES)
-    .fill(PERLIN_NOISE_2D_GRAD_DIRECTIONS)
-    .flat()
-    .slice(0, PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES);
+function Perlin2DGradientDotProd(i, x, y) {
+  switch (i & 15) {
+    case 0:  return x + y; // [1, 1],
+    case 1:  return -x + y; // [-1, 1],
+    case 2:  return x -y; // [1, -1],
+    case 3:  return -x -y; // [-1, -1],
+    case 4:  return x; // [1, 0],
+    case 5:  return -x; // [-1, 0],
+    case 6:  return x; // [1, 0],
+    case 7:  return -x; // [-1, 0],
+    case 8:  return y; // [0, 1],
+    case 9:  return -y; // [0, -1],
+    case 10: return y; // [0, 1],
+    case 11: return -y; // [0, -1],
+    case 12: return x + y; // [1, 1],
+    case 13: return -x + y; // [-1, 1],
+    case 14: return x -y; // [1, -1],
+    case 15: return -x -y; // [-1, -1]
+  }
+}
 
-const PerlinNoise2DGradientsBySeed = {};
-let PerlinNoise2DPermutationTable = [];
-
-PerlinNoise2DPermutationTable = [
+let PerlinNoise2DPermutationTable = [
   151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,
   99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,
   11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,134,
@@ -32,17 +43,16 @@ PerlinNoise2DPermutationTable = [
 ];
 
 function PerlinNoise2D({
-  getRandomFn = srand,
   filterFn = cosFilter,
   outputFilterFn = id,
   frequency = 1,
   amplitude = 1,
-  offset = 0,
+  xOffset = 0,
+  yOffset = 0,
   seed,
-  x: valueX, // required value
-  y: valueY, // required value
+  x: valueX = 0, // required value
+  y: valueY = 0, // required value
 }) {
-  const maxVertices = PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES;
   const maxVerticesMask = PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK;
   const pTable = PerlinNoise2DPermutationTable;
 
@@ -50,26 +60,9 @@ function PerlinNoise2D({
     setRandomSeed(seed);
   }
 
-  let gTable = PerlinNoise2DGradientsBySeed[seed];
-
-  if (!gTable) {
-    const randoms = new Array(maxVertices).fill(0).map(getRandomFn);
-    const table = randoms.map(randVec => {
-      return mapVec(randVec, val => {
-        val = floor(map(0, 1, 0, maxVerticesMask, val));
-        return PerlinNoise2DGradientBase[pTable[val]];
-      });
-    });
-
-    PerlinNoise2DGradientsBySeed[seed] = gTable = [
-      ...table,
-      ...table
-    ];
-  }
-
   // Floor
-  const x = (valueX + offset) * frequency;
-  const y = (valueY + offset) * frequency;
+  const x = (valueX + xOffset) * frequency;
+  const y = (valueY + yOffset) * frequency;
   const xInt = floor(x);
   const yInt = floor(y);
   const tx = x - xInt;
@@ -82,21 +75,18 @@ function PerlinNoise2D({
   const topVertexIndex = (bottomVertexIndex + 1) & maxVerticesMask;
 
   // Get vertices.
-  const g00 = gTable[pTable[pTable[leftVertexIndex] + bottomVertexIndex] & maxVerticesMask];
-  const g10 = gTable[pTable[pTable[rightVertexIndex] + bottomVertexIndex] & maxVerticesMask];
-  const g01 = gTable[pTable[pTable[leftVertexIndex] + topVertexIndex] & maxVerticesMask];
-  const g11 = gTable[pTable[pTable[rightVertexIndex] + topVertexIndex] & maxVerticesMask];
+  const g00 = pTable[pTable[leftVertexIndex] + bottomVertexIndex];
+  const g10 = pTable[pTable[rightVertexIndex] + bottomVertexIndex];
+  const g01 = pTable[pTable[leftVertexIndex] + topVertexIndex];
+  const g11 = pTable[pTable[rightVertexIndex] + topVertexIndex];
 
-  const c00 = mapVec(g00, val => dotProd(val, [tx, ty]));
-  const c10 = mapVec(g10, val => dotProd(val, [tx-1, ty]));
-  const c01 = mapVec(g01, val => dotProd(val, [tx, ty-1]));
-  const c11 = mapVec(g11, val => dotProd(val, [tx-1, ty-1]));
+  const c00 = Perlin2DGradientDotProd(g00, tx, ty);
+  const c10 = Perlin2DGradientDotProd(g10, tx-1, ty);
+  const c01 = Perlin2DGradientDotProd(g01, tx, ty-1);
+  const c11 = Perlin2DGradientDotProd(g11, tx-1, ty-1);
 
   // Retun bilinear interpolation.
-  return multiply(
-    map(-1, 1, 0, 1, outputFilterFn(
-      bilerp(c00, c10, c01, c11, filterFn(tx), filterFn(ty))
-    )),
-    amplitude
-  );
+  return outputFilterFn(
+    map(-1, 1, 0, 1, bilerp(c00, c10, c01, c11, filterFn(tx), filterFn(ty)))
+  ) * amplitude;
 }
