@@ -62,5 +62,9 @@ function draw(schedule) {
   !stopped && schedule && window.requestAnimationFrame(() => draw(true));
 }
 
+// Warm up noise algorithms.
+ValueNoise2D({});
+PerlinNoise2D({});
+
 onResize();
 draw(true);
