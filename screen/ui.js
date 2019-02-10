@@ -12,6 +12,7 @@ const lacunarityInput = document.getElementById('lacunarityInput');
 const gainInput = document.getElementById('gainInput');
 const drawButton = document.getElementById('drawButton');
 const playPauseButton = document.getElementById('playPauseButton');
+const incrementOffsetButton = document.getElementById('incrementOffsetButton');
 const resetOffsetButton = document.getElementById('resetOffsetButton');
 const seedInput = document.getElementById('seedInput');
 
@@ -34,6 +35,7 @@ const elements = [
   gainInput,
   drawButton,
   playPauseButton,
+  incrementOffsetButton,
   resetOffsetButton,
   seedInput,
   leaveTailInput,
@@ -56,6 +58,7 @@ const visualisationFnsMap = {
   '2d-colorful-marble-image': draw2DColorfulMarbleImage,
   '2d-wood-image': draw2DWoodImage,
   '2d-colorful-wood-image': draw2DColorfulWoodImage,
+  '2d-terrain': draw2DTerrainImage
 };
 
 const methodFnsMap = {
@@ -91,6 +94,7 @@ const visualisationDefaults = {
   '2d-colorful-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true, stop: true},
   '2d-wood-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.008, octave: 1, lacunarity: 1, gain:1, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true, stop: true},
   '2d-colorful-wood-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.008, octave: 1, lacunarity: 1, gain:1, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true, stop: true},
+  '2d-terrain': {speed: 10, offset: 0, amplitude: 0.95, frequency: 0.01, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', syncOffsetsXY: true, stop: false},
 };
 
 Object.keys(visualisationDefaults).map(key => visualisationDefaults[key].visualisation = key);
@@ -233,5 +237,9 @@ on(playPauseButton, 'click', () => {
   paused = !paused;
   playPauseButton.innerText = paused ? 'Start Auto Draw' : 'Auto Drawing';
   playPauseButton.style.color = paused ? '#e0e0e0' : 'yellowgreen';
+});
+on(incrementOffsetButton, 'click', () => {
+  offset += speed;
+  offsetInput.value = parseFloat(offset.toFixed('10'));
 });
 on(resetOffsetButton, 'click', () => offset = 0);

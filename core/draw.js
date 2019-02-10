@@ -33,7 +33,7 @@ function draw(schedule) {
   const isAsync = visualisationFn({
     getValueFn: ((x = 0, y = 0) => {
       let noiseSum = 0;
-      let _amplitude = 1;
+      let _amplitude = 0.5;
       let _frequency = frequency;
 
       let xOffset = yOffset = offset;
