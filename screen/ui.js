@@ -77,20 +77,20 @@ const outputFilterFnsMap = {
 };
 
 const visualisationDefaults = {
-  '1d-line': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
-  '1d-colorful-line': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
-  '1d-color-gradient': {speed: 30, amplitude: 500, frequency: 0.0003, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
-  '1d-rgb-lines': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
-  '1d-ball': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
-  '1d-colorful-ball': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
-  '1d-radius-ball': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
-  '1d-colorful-triangle': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false},
-  '2d-grayscale-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true},
-  '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true},
-  '2d-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true},
-  '2d-colorful-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true},
-  '2d-wood-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.008, octave: 1, lacunarity: 1, gain:1, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true},
-  '2d-colorful-wood-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.008, octave: 1, lacunarity: 1, gain:1, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true}
+  '1d-line': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false, stop: false},
+  '1d-colorful-line': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false, stop: false},
+  '1d-color-gradient': {speed: 30, amplitude: 500, frequency: 0.0003, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false, stop: false},
+  '1d-rgb-lines': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false, stop: false},
+  '1d-ball': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false, stop: false},
+  '1d-colorful-ball': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false, stop: false},
+  '1d-radius-ball': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false, stop: false},
+  '1d-colorful-triangle': {speed: 30, amplitude: 500, frequency: 0.001, octave: 1, lacunarity: 1, gain:1, method:'value-noise-2d', syncOffsetsXY: false, stop: false},
+  '2d-grayscale-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true, stop: true},
+  '2d-colorful-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true, stop: true},
+  '2d-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true, stop: true},
+  '2d-colorful-marble-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.02, octave: 5, lacunarity: 2, gain:0.5, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true, stop: true},
+  '2d-wood-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.008, octave: 1, lacunarity: 1, gain:1, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true, stop: true},
+  '2d-colorful-wood-image': {speed: 0, offset: 0, amplitude: 1.8, frequency: 0.008, octave: 1, lacunarity: 1, gain:1, method:'perlin-noise-2d', filter:'fade', disable: [playPauseButton, speedInput], syncOffsetsXY: true, stop: true},
 };
 
 Object.keys(visualisationDefaults).map(key => visualisationDefaults[key].visualisation = key);
@@ -125,23 +125,6 @@ function applySettings(settings) {
   }
 
   elements.forEach(element => element.disabled = false);
-  const dimension = visualisation.split('-')[0];
-
-  if (dimension === '1d') {
-    if (stopped) {
-      stopped = false;
-      draw(true);
-    }
-    stopped = false;
-  }
-
-  if (dimension === '2d') {
-    if (stopped) {
-      stopped = true;
-      draw();
-    }
-    stopped = true;
-  }
 
   speedInput.value = speed;
   offsetInput.value = offset;
@@ -159,9 +142,10 @@ function applySettings(settings) {
   setOption(outputFilterSelect, outputFilter);
 
   (settings.disable || []).forEach(element => element.disabled = true);
-}
 
-applySettings(visualisationDefaults['1d-line']);
+  stopped = first(settings.stop, stopped);
+  draw(!stopped);
+}
 
 function getCurrentState() {
   const visualisationFn = visualisationFnsMap[visualisation];

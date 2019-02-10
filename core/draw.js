@@ -1,4 +1,10 @@
+let drawScheduled = false;
+
 function draw(schedule) {
+  if (drawScheduled) {
+    return false;
+  }
+
   if (leaveTail) {
     context.globalAlpha = 0.1;
     context.fillStyle = '#000';
@@ -59,12 +65,22 @@ function draw(schedule) {
   }
 
   if (stopped) console.log('Draw Completed.');
-  !stopped && schedule && window.requestAnimationFrame(() => draw(true));
+
+  if (!stopped && schedule) {
+    drawScheduled = true;
+
+    window.requestAnimationFrame(() => {
+      drawScheduled = false;
+      draw(true);
+    });
+  }
 }
 
 // Warm up noise algorithms.
 ValueNoise2D({});
 PerlinNoise2D({});
+
+applySettings(visualisationDefaults['1d-line']);
 
 onResize();
 draw(true);
