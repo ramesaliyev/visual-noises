@@ -1,3 +1,5 @@
+let debugMode = false;
+
 let screenWidth;
 let screenHeight;
 let mouseX;
@@ -8,13 +10,14 @@ let method = 'value-noise-2d';
 let filter = 'smoothstep';
 let outputFilter = 'none';
 
-let seed = 1549150175619;
+let seed = Date.now();
 
 let stopped = false;
 let paused = false;
 let leaveTail = false;
 let applyDefaults = true;
 let syncOffsetsXY = false;
+let clearCanvas = true;
 
 let speed;
 let offset = 0;

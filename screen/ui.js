@@ -215,7 +215,12 @@ onChangeGetFloat(gainInput, val => gain = val);
 pauseOnFocus(offsetInput);
 
 onChangeGetInt(seedInput, val => {
+  seed = val;
   setRandomSeed(val);
+
+  ValueNoise2D({});
+  PerlinNoise2D({});
+
   offset = 0;
 });
 

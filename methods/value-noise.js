@@ -29,17 +29,12 @@ function ValueNoise2D({
   amplitude = 1,
   xOffset = 0,
   yOffset = 0,
-  seed,
   x: valueX = 0, // required value
   y: valueY = 0, // required value
 }) {
   const maxVertices = VALUE_NOISE_2D_DEFAULT_MAX_VERTICES;
   const maxVerticesMask = VALUE_NOISE_2D_DEFAULT_MAX_VERTICES_MASK;
   const permutationTable = ValueNoise2DPermutationTable;
-
-  if (seed) {
-    setRandomSeed(seed);
-  }
 
   let randoms = ValueNoise2DRandomsBySeed[seed];
 

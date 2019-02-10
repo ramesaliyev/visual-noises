@@ -1,5 +1,5 @@
 function run(fn, globals, done) {
-  const now = performance.now();
+  const now = debugMode ? performance.now() : 0;
   const worker = new Worker(URL.createObjectURL(new Blob([`
     // Utils
     const PI = Math.PI;
@@ -41,6 +41,7 @@ function run(fn, globals, done) {
     let octave = ${octave};
     let lacunarity = ${lacunarity};
     let gain = ${gain};
+    let seed = ${seed};
 
     // Value Noise 2D
     const VALUE_NOISE_2D_DEFAULT_MAX_VERTICES = ${VALUE_NOISE_2D_DEFAULT_MAX_VERTICES};
@@ -52,7 +53,9 @@ function run(fn, globals, done) {
     // Perlin Noise 2D
     const PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES = ${PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES};
     const PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK = ${PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK};
-    let PerlinNoise2DPermutationTable = ${JSON.stringify(PerlinNoise2DPermutationTable)};
+    let PerlinNoise2DPermutationTableBase = ${JSON.stringify(PerlinNoise2DPermutationTableBase)};
+    let PerlinNoise2DPermutationTableBySeed = ${JSON.stringify(PerlinNoise2DPermutationTableBySeed)};
+    ${getPerlinNoise2dPermutationTableBySeed};
     ${Perlin2DGradientDotProd};
     ${PerlinNoise2D};
 
@@ -62,16 +65,19 @@ function run(fn, globals, done) {
     const filterFn = ${getCurrentState().filterFn};
     const outputFilterFn = ${getCurrentState().outputFilterFn};
 
+    // Initialize
+    setRandomSeed(seed);
+
     // Supplied Globals
     ${Object.keys(globals).map(name => `const ${name} = ${globals[name]};`).join('\n')}
 
     // Run fn.
     postMessage((${fn})());
   `])));
-  console.log(`Worker prepared, took ${performance.now() - now}ms.`);
+  debugMode && console.log(`Worker prepared, took ${performance.now() - now}ms.`);
 
   worker.onmessage = ({data}) => {
-    console.log(`Worker job completed, took ${performance.now() - now}ms.`);
+    debugMode && console.log(`Worker job completed, took ${performance.now() - now}ms.`);
     worker.terminate();
     done(data);
   };
