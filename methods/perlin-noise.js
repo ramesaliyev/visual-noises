@@ -59,22 +59,10 @@ function Perlin2DGradientDotProd(i, x, y) {
   }
 }
 
-function PerlinNoise2D({
-  filterFn = cosFilter,
-  outputFilterFn = id,
-  frequency = 1,
-  amplitude = 1,
-  xOffset = 0,
-  yOffset = 0,
-  x: valueX = 0, // required value
-  y: valueY = 0, // required value
-}) {
+function PerlinNoise2D(x = 0, y = 0, filterFn = fadeFilter) {
   const maxVerticesMask = PERLIN_NOISE_2D_DEFAULT_MAX_VERTICES_MASK;
   const pTable = getPerlinNoise2dPermutationTableBySeed(seed);
 
-  // Floor
-  const x = (valueX + xOffset) * frequency;
-  const y = (valueY + yOffset) * frequency;
   const xInt = floor(x);
   const yInt = floor(y);
   const tx = x - xInt;
@@ -97,8 +85,6 @@ function PerlinNoise2D({
   const c01 = Perlin2DGradientDotProd(g01, tx, ty-1);
   const c11 = Perlin2DGradientDotProd(g11, tx-1, ty-1);
 
-  // Retun bilinear interpolation.
-  return outputFilterFn(
-    map(-1, 1, 0, 1, bilerp(c00, c10, c01, c11, filterFn(tx), filterFn(ty)))
-  ) * amplitude;
+  // Map [-1:1] to [0:1]
+  return (bilerp(c00, c10, c01, c11, filterFn(tx), filterFn(ty)) + 1) * 0.5;
 }

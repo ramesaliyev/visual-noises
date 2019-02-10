@@ -9,15 +9,15 @@ function draw1DColorfulBall({
   context.clearRect(offsetX, height-1, offsetX + width, 3);
   dashedLine(offsetX, height, offsetX + width, height, {color:'#333'});
 
-  const y = getValueFn(0);
+  const y = getValueFn(0) * amplitude;
 
   const radius = 20;
   const xPos = offsetX + (width / 2);
   const yPos = offsetY + height - radius/2 - y;
 
-  const r = map(0, amplitude, 0, 255, getValueFn(x + 2/frequency));
-  const g = map(0, amplitude, 0, 255, getValueFn(x + 64/frequency));
-  const b = map(0, amplitude, 0, 255, getValueFn(x + 128/frequency));
+  const r = floor(255 * getValueFn(y + 2/frequency));
+  const g = floor(255 * getValueFn(y + 64/frequency));
+  const b = floor(255 * getValueFn(y + 128/frequency));
 
   circle(xPos, yPos, radius, {color: `rgb(${r}, ${g}, ${b})`});
 }

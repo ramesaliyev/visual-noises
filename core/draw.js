@@ -31,7 +31,7 @@ function draw(schedule) {
   } = getCurrentState();
 
   const isAsync = visualisationFn({
-    getValueFn: ((x, y) => {
+    getValueFn: ((x = 0, y = 0) => {
       let noiseSum = 0;
       let _amplitude = amplitude;
       let _frequency = frequency;
@@ -42,24 +42,23 @@ function draw(schedule) {
         yOffset = 0;
       }
 
-      for (let i = 0; i < octave; i++) {
-        noiseSum += methodFn({
-          x,
-          y,
-          xOffset,
-          yOffset,
-          filterFn,
-          outputFilterFn,
-          amplitude:_amplitude,
-          frequency:_frequency,
-          getRandomFn: srand
-        });
+      let maxValue = 0;
 
+      for (let i = 0; i < octave; i++) {
+        const noise = methodFn(
+          (x + xOffset) * _frequency,
+          (y + yOffset) * _frequency,
+          filterFn
+        )
+
+        noiseSum += outputFilterFn(noise) * _amplitude;
+
+        maxValue += _amplitude;
         _frequency *= lacunarity;
         _amplitude *= gain;
       }
 
-      return noiseSum / octave;
+      return noiseSum / maxValue;
     }),
     offsetX: 200,
     offsetY: 0,

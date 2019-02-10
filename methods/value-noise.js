@@ -21,17 +21,7 @@ ValueNoise2DPermutationTable = [
   ...ValueNoise2DPermutationTable
 ];
 
-function ValueNoise2D({
-  getRandomFn = srand,
-  filterFn = cosFilter,
-  outputFilterFn = id,
-  frequency = 1,
-  amplitude = 1,
-  xOffset = 0,
-  yOffset = 0,
-  x: valueX = 0, // required value
-  y: valueY = 0, // required value
-}) {
+function ValueNoise2D(x = 0, y = 0, filterFn = smoothStepFilter) {
   const maxVertices = VALUE_NOISE_2D_DEFAULT_MAX_VERTICES;
   const maxVerticesMask = VALUE_NOISE_2D_DEFAULT_MAX_VERTICES_MASK;
   const permutationTable = ValueNoise2DPermutationTable;
@@ -43,13 +33,11 @@ function ValueNoise2D({
 
     const length = maxVertices;
     for (let i = 0; i < length ; i++) {
-      randoms[i] = getRandomFn();
+      randoms[i] = srand();
     }
   }
 
   // Floor
-  const x = (valueX + xOffset) * frequency;
-  const y = (valueY + yOffset) * frequency;
   const xInt = floor(x);
   const yInt = floor(y);
   const tx = x - xInt;
@@ -68,5 +56,5 @@ function ValueNoise2D({
   const c11 = randoms[permutationTable[permutationTable[rightVertexIndex] + topVertexIndex]];
 
   // Retun bilinear interpolation.
-  return outputFilterFn(bilerp(c00, c10, c01, c11, filterFn(tx), filterFn(ty))) * amplitude;
+  return bilerp(c00, c10, c01, c11, filterFn(tx), filterFn(ty));
 }

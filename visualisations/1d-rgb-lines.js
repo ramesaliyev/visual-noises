@@ -12,13 +12,17 @@ function draw1DRGBLines({
     const xPos = offsetX + x;
     const yPosBase = offsetY + height;
 
-    const rY = getValueFn(x + 2/frequency);
-    const gY = getValueFn(x + 64/frequency);
-    const bY = getValueFn(x + 128/frequency);
+    const rV = getValueFn(x + 2/frequency);
+    const gV = getValueFn(x + 64/frequency);
+    const bV = getValueFn(x + 128/frequency);
 
-    const r = map(0, amplitude, 0, 255, rY);
-    const g = map(0, amplitude, 0, 255, gY);
-    const b = map(0, amplitude, 0, 255, bY);
+    const r = floor(255 * rV);
+    const g = floor(255 * gV);
+    const b = floor(255 * bV);
+
+    const rY = rV * amplitude;
+    const gY = gV * amplitude;
+    const bY = bV * amplitude;
 
     line(xPos, 100, xPos, 101, {color: `rgb(${r}, ${g}, ${b})`});
     line(xPos, yPosBase - rY, xPos, yPosBase - rY - 1, {color: `rgb(${r}, ${0}, ${0})`});
