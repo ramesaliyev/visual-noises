@@ -39,23 +39,15 @@ function getPerlinNoise2dPermutationTableBySeed(seed) {
 }
 
 function Perlin2DGradientDotProd(i, x, y) {
-  switch (i & 15) {
+  switch (i & 7) {
     case 0:  return x + y; // [1, 1],
     case 1:  return -x + y; // [-1, 1],
     case 2:  return x -y; // [1, -1],
     case 3:  return -x -y; // [-1, -1],
     case 4:  return x; // [1, 0],
     case 5:  return -x; // [-1, 0],
-    case 6:  return x; // [1, 0],
-    case 7:  return -x; // [-1, 0],
-    case 8:  return y; // [0, 1],
-    case 9:  return -y; // [0, -1],
-    case 10: return y; // [0, 1],
-    case 11: return -y; // [0, -1],
-    case 12: return x + y; // [1, 1],
-    case 13: return -x + y; // [-1, 1],
-    case 14: return x -y; // [1, -1],
-    case 15: return -x -y; // [-1, -1]
+    case 6:  return y; // [0, 1],
+    case 7:  return -y; // [0, -1],
   }
 }
 
