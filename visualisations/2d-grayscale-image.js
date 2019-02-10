@@ -8,6 +8,7 @@ function draw2DGrayscaleImage({
   height -= 100;
   width -= 200;
 
+  context.clearRect(0, 0, screenWidth, screenHeight);
   text(offsetX/2 + screenWidth/2, screenHeight/2, 'Calculating...', {color: '#666'});
 
   const calculate = () => {
