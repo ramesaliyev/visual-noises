@@ -1,5 +1,14 @@
 let drawScheduled = false;
 
+function scheduleDraw() {
+  drawScheduled = true;
+
+  window.requestAnimationFrame(() => {
+    drawScheduled = false;
+    draw(true);
+  });
+}
+
 function draw(schedule) {
   if (drawScheduled) {
     return false;
@@ -10,7 +19,7 @@ function draw(schedule) {
     context.fillStyle = '#000';
     context.fillRect(0, 0, screenWidth, screenHeight);
     context.globalAlpha = 1;
-  } else {
+  } else if (clearCanvas) {
     context.clearRect(0, 0, screenWidth, screenHeight);
   }
 
@@ -21,7 +30,7 @@ function draw(schedule) {
     outputFilterFn,
   } = getCurrentState();
 
-  visualisationFn({
+  const isAsync = visualisationFn({
     getValueFn: ((x, y) => {
       let noiseSum = 0;
       let _amplitude = amplitude;
@@ -52,11 +61,11 @@ function draw(schedule) {
 
       return noiseSum / octave;
     }),
-    seed,
     offsetX: 200,
     offsetY: 0,
     width: screenWidth - 200,
-    height: screenHeight - 100
+    height: screenHeight - 100,
+    done: () => !stopped && scheduleDraw()
   });
 
   if (!paused) {
@@ -64,23 +73,22 @@ function draw(schedule) {
     offset += speed;
   }
 
-  if (stopped) console.log('Draw Completed.');
+  if (stopped && debugMode) console.log('Draw stopped.');
 
-  if (!stopped && schedule) {
-    drawScheduled = true;
+  clearCanvas = !isAsync;
 
-    window.requestAnimationFrame(() => {
-      drawScheduled = false;
-      draw(true);
-    });
+  if (!stopped && schedule && !isAsync) {
+    scheduleDraw();
   }
 }
+
+// Initialize seed.
+setRandomSeed(seed);
 
 // Warm up noise algorithms.
 ValueNoise2D({});
 PerlinNoise2D({});
 
-applySettings(visualisationDefaults['1d-line']);
-
 onResize();
-draw(true);
+
+applySettings(visualisationDefaults['1d-line']);
