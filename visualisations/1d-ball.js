@@ -9,7 +9,7 @@ function draw1DBall({
   context.clearRect(offsetX, height-1, offsetX + width, 3);
   dashedLine(offsetX, height, offsetX + width, height, {color:'#333'});
 
-  const y = getValueFn(0) * amplitude;
+  const y = getValueFn(0);
 
   const radius = 20;
   const xPos = offsetX + (width / 2);

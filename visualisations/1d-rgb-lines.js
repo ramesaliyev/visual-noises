@@ -12,9 +12,9 @@ function draw1DRGBLines({
     const xPos = offsetX + x;
     const yPosBase = offsetY + height;
 
-    const rV = getValueFn(x + 2/frequency);
-    const gV = getValueFn(x + 64/frequency);
-    const bV = getValueFn(x + 128/frequency);
+    const rV = getValueFn(x + 2/frequency) / amplitude;
+    const gV = getValueFn(x + 64/frequency) / amplitude;
+    const bV = getValueFn(x + 128/frequency) / amplitude;
 
     const r = floor(255 * rV);
     const g = floor(255 * gV);

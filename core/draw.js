@@ -33,12 +33,12 @@ function draw(schedule) {
   const isAsync = visualisationFn({
     getValueFn: ((x = 0, y = 0) => {
       let noiseSum = 0;
-      let _amplitude = amplitude;
+      let _amplitude = 1;
       let _frequency = frequency;
 
       let xOffset = yOffset = offset;
 
-      if (typeof y === 'undefined' && !syncOffsetsXY) {
+      if (!syncOffsetsXY) {
         yOffset = 0;
       }
 
@@ -58,7 +58,7 @@ function draw(schedule) {
         _amplitude *= gain;
       }
 
-      return noiseSum / maxValue;
+      return (noiseSum / maxValue) * amplitude;
     }),
     offsetX: 200,
     offsetY: 0,

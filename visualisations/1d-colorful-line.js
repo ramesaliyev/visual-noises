@@ -9,14 +9,14 @@ function draw1DColorfulLine({
   dashedLine(offsetX, height, offsetX + width, height, {color:'#333'});
 
   for (let x = 0; x < width; x++) {
-    const y = getValueFn(x) * amplitude;
+    const y = getValueFn(x);
 
     const xPos = offsetX + x;
     const yPos = offsetY + height - y;
 
-    const r = floor(255 * getValueFn(x + 2/frequency));
-    const g = floor(255 * getValueFn(x + 64/frequency));
-    const b = floor(255 * getValueFn(x + 128/frequency));
+    const r = floor(255 * getValueFn(x + 2/frequency)) / amplitude;
+    const g = floor(255 * getValueFn(x + 64/frequency)) / amplitude;
+    const b = floor(255 * getValueFn(x + 128/frequency)) / amplitude;
 
     line(xPos, yPos, xPos, yPos - 1, {color: `rgb(${r}, ${g}, ${b})`});
   }

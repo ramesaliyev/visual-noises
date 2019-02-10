@@ -42,6 +42,7 @@ function run(fn, globals, done) {
     let lacunarity = ${lacunarity};
     let gain = ${gain};
     let seed = ${seed};
+    let syncOffsetsXY = ${syncOffsetsXY};
 
     // Value Noise 2D
     const VALUE_NOISE_2D_DEFAULT_MAX_VERTICES = ${VALUE_NOISE_2D_DEFAULT_MAX_VERTICES};
