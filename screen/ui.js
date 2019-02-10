@@ -96,9 +96,9 @@ const visualisationDefaults = {
 Object.keys(visualisationDefaults).map(key => visualisationDefaults[key].visualisation = key);
 
 const presets = {
-  'dancing-mountains': {visualisation: '1d-line', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 1, amplitude: 500, frequency: 0.0005, octave: 5, lacunarity: 3, gain:1, syncOffsetsXY:true},
-  'rainy-clouds': {visualisation: '2d-grayscale-image', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 0, offset: 0, amplitude: 1.8, frequency: 0.002, octave: 5, lacunarity: 2, gain:0.5},
-  'dream-clouds': {visualisation: '2d-colorful-image', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 0, offset: 0, amplitude: 1.8, frequency: 0.002, octave: 5, lacunarity: 2, gain:0.5},
+  'dancing-mountains': {visualisation: '1d-line', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 1, amplitude: 500, frequency: 0.0005, octave: 5, lacunarity: 3, gain:1, syncOffsetsXY:true, stop:false},
+  'rainy-clouds': {visualisation: '2d-grayscale-image', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 0, offset: 0, amplitude: 1.8, frequency: 0.002, octave: 5, lacunarity: 2, gain:0.5, stop:true},
+  'dream-clouds': {visualisation: '2d-colorful-image', method: 'value-noise-2d', filter: 'smoothstep', outputFilter: 'none', speed: 0, offset: 0, amplitude: 1.8, frequency: 0.002, octave: 5, lacunarity: 2, gain:0.5, stop:true},
 }
 
 Object.keys(presets).map(key => presets[key].disable = visualisationDefaults[presets[key].visualisation].disable);
